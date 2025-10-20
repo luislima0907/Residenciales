@@ -1,0 +1,148 @@
+﻿@model WebDBFinal.Models.StoredProcedureInfo
+
+@{
+    ViewData["Title"] = "Ejecutar Consulta";
+}
+
+<div class="row">
+    <div class="col-md-10 offset-md-1">
+        <div class="mb-3">
+            <a asp-action="Index" class="btn btn-secondary btn-sm">
+                <i class="bi bi-arrow-left"></i> Volver a Consultas
+            </a>
+        </div>
+
+        <h2 class="mb-4">Ejecutar Consulta</h2>
+
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-info text-white">
+                <h5 class="mb-0">@Model.Name</h5>
+            </div>
+            <div class="card-body">
+                <p class="lead">@Model.Description</p>
+                
+                @if (Model.Parameters.Any())
+                {
+                    <hr />
+                    <form asp-action="ExecuteProcedure" method="post">
+                        <input type="hidden" name="ProcedureName" value="@Model.Name" />
+                        
+                        <div class="row">
+                            @foreach (var param in Model.Parameters)
+                            {
+                                <div class="col-md-6 mb-3">
+                                    <label for="param_@param.Name" class="form-label">
+                                        @param.Name
+                                        @if (param.IsRequired)
+                                        {
+                                            <span class="text-danger">*</span>
+                                        }
+                                    </label>
+                                    
+                                    @if (param.Type == "checkbox")
+                                    {
+                                        <div class="form-check">
+                                            <input type="checkbox" 
+                                                   class="form-check-input" 
+                                                   id="param_@param.Name" 
+                                                   name="Parameters[@param.Name]" 
+                                                   value="true" />
+                                            <label class="form-check-label" for="param_@param.Name">
+                                                Activar
+                                            </label>
+                                        </div>
+                                    }
+                                    else if (param.Type == "date")
+                                    {
+                                        <input type="date" 
+                                               class="form-control" 
+                                               id="param_@param.Name" 
+                                               name="Parameters[@param.Name]" 
+                                               required="@param.IsRequired" />
+                                    }
+                                    else if (param.Type == "datetime-local")
+                                    {
+                                        <input type="datetime-local" 
+                                               class="form-control" 
+                                               id="param_@param.Name" 
+                                               name="Parameters[@param.Name]" 
+                                               required="@param.IsRequired" />
+                                    }
+                                    else if (param.Type == "time")
+                                    {
+                                        <input type="time" 
+                                               class="form-control" 
+                                               id="param_@param.Name" 
+                                               name="Parameters[@param.Name]" 
+                                               required="@param.IsRequired" />
+                                    }
+                                    else if (param.Type == "number")
+                                    {
+                                        <input type="number" 
+                                               class="form-control" 
+                                               id="param_@param.Name" 
+                                               name="Parameters[@param.Name]" 
+                                               placeholder="Ingrese @param.Name" 
+                                               required="@param.IsRequired" />
+                                    }
+                                    else
+                                    {
+                                        <input type="text" 
+                                               class="form-control" 
+                                               id="param_@param.Name" 
+                                               name="Parameters[@param.Name]" 
+                                               placeholder="Ingrese @param.Name" 
+                                               required="@param.IsRequired" />
+                                    }
+                                    <small class="text-muted">Tipo: @param.Type</small>
+                                </div>
+                            }
+                        </div>
+
+                        <hr />
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a asp-action="Index" class="btn btn-secondary">
+                                <i class="bi bi-x-circle"></i> Cancelar
+                            </a>
+                            <button type="submit" class="btn btn-success">
+                                <i class="bi bi-play-fill"></i> Ejecutar Consulta
+                            </button>
+                        </div>
+                    </form>
+                }
+                else
+                {
+                    <div class="alert alert-info" role="alert">
+                        <i class="bi bi-info-circle"></i> Esta consulta no requiere parámetros.
+                    </div>
+                    <form asp-action="ExecuteProcedure" method="post">
+                        <input type="hidden" name="ProcedureName" value="@Model.Name" />
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a asp-action="Index" class="btn btn-secondary">
+                                <i class="bi bi-x-circle"></i> Cancelar
+                            </a>
+                            <button type="submit" class="btn btn-success">
+                                <i class="bi bi-play-fill"></i> Ejecutar Consulta
+                            </button>
+                        </div>
+                    </form>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Validación adicional del formulario
+        document.querySelector('form')?.addEventListener('submit', function(e) {
+            const form = this;
+            if (!form.checkValidity()) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            form.classList.add('was-validated');
+        });
+    </script>
+}
+

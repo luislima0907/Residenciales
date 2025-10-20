@@ -1,0 +1,192 @@
+﻿@model object
+@using System.Reflection
+@using System.ComponentModel.DataAnnotations
+@using WebDBFinal.Entities
+@using WebDBFinal.Services
+
+@{
+    ViewData["Title"] = $"Editar {ViewBag.EntityName}";
+    var properties = (List<PropertyInfo>)ViewBag.Properties;
+    var keyProperties = (List<PropertyInfo>)ViewBag.KeyProperties;
+    var foreignKeyData = ViewBag.ForeignKeyData as Dictionary<string, List<DropdownItem>> ?? new Dictionary<string, List<DropdownItem>>();
+    var currentClusterValue = ViewBag.CurrentClusterValue?.ToString() ?? "";
+    var currentCasaValue = ViewBag.CurrentCasaValue?.ToString() ?? "";
+    var currentForeignKeyValue = !string.IsNullOrEmpty(currentClusterValue) ? currentClusterValue : currentCasaValue;
+    var renderedFKs = new HashSet<string>();
+}
+
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <h2 class="mb-4">Editar @ViewBag.EntityName</h2>
+
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <form asp-action="Edit" method="post">
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+                    @foreach (var prop in properties)
+                    {
+                        var isKey = keyProperties.Any(k => k.Name == prop.Name);
+                        var stringLengthAttr = prop.GetCustomAttribute<StringLengthAttribute>();
+                        var maxLength = stringLengthAttr?.MaximumLength ?? 100;
+                        var currentValue = prop.GetValue(Model);
+                        var hasForeignKey = foreignKeyData.ContainsKey(prop.Name);
+
+                        // Si ya renderizamos este grupo de FK compuesta, saltarlo
+                        if (hasForeignKey && renderedFKs.Contains(prop.Name))
+                        {
+                            continue;
+                        }
+
+                        <div class="mb-3">
+                            <label for="@prop.Name" class="form-label">@prop.Name</label>
+                            
+                            @if (hasForeignKey)
+                            {
+                                var items = foreignKeyData[prop.Name];
+                                
+                                // Detectar si es FK compuesta (múltiples propiedades con los mismos items)
+                                var relatedProps = foreignKeyData
+                                    .Where(kvp => kvp.Value == items && kvp.Key != prop.Name)
+                                    .Select(kvp => kvp.Key)
+                                    .ToList();
+                                
+                                if (relatedProps.Any())
+                                {
+                                    // FK Compuesta - mostrar un solo dropdown
+                                    var allFKParts = new List<string> { prop.Name };
+                                    allFKParts.AddRange(relatedProps);
+                                    
+                                    <select class="form-select fk-composite" 
+                                            data-fk-parts="@string.Join(",", allFKParts)" 
+                                            @(isKey ? "disabled" : "") required>
+                                        <option value="">-- Seleccione (@string.Join(", ", allFKParts)) --</option>
+                                        @foreach (var item in items)
+                                        {
+                                            var isSelected = item.Value == currentForeignKeyValue;
+                                            @if (isSelected)
+                                            {
+                                                <option value="@item.Value" selected>@item.Text</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.Value">@item.Text</option>
+                                            }
+                                        }
+                                    </select>
+                                    
+                                    @foreach (var part in allFKParts)
+                                    {
+                                        var partValue = Model.GetType().GetProperty(part)?.GetValue(Model)?.ToString() ?? "";
+                                        <input type="hidden" name="@part" class="fk-part-@part" value="@partValue" @(isKey ? "" : "") />
+                                        renderedFKs.Add(part);
+                                    }
+                                    
+                                    <small class="text-muted">Este campo representa: @string.Join(", ", allFKParts)</small>
+                                }
+                                else
+                                {
+                                    // FK Simple
+                                    var currentValueStr = currentValue?.ToString() ?? "";
+                                    <select class="form-select" id="@prop.Name" name="@prop.Name" @(isKey ? "disabled" : "") required>
+                                        <option value="">-- Seleccione @prop.Name --</option>
+                                        @foreach (var item in items)
+                                        {
+                                            var isSelected = item.Value == currentValueStr;
+                                            @if (isSelected)
+                                            {
+                                                <option value="@item.Value" selected>@item.Text</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.Value">@item.Text</option>
+                                            }
+                                        }
+                                    </select>
+                                    @if (isKey)
+                                    {
+                                        <input type="hidden" name="@prop.Name" value="@currentValue" />
+                                    }
+                                    <small class="text-muted">Seleccione de la lista</small>
+                                }
+                            }
+                            else if (prop.PropertyType == typeof(bool))
+                            {
+                                var boolValue = currentValue != null ? Convert.ToBoolean(currentValue) : false;
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="@prop.Name" name="@prop.Name" 
+                                           value="true" @(boolValue ? "checked" : "") @(isKey ? "disabled" : "") />
+                                    <input type="hidden" name="@prop.Name" value="false" />
+                                    <label class="form-check-label" for="@prop.Name">
+                                        Activar
+                                    </label>
+                                </div>
+                                @if (isKey)
+                                {
+                                    <input type="hidden" name="@prop.Name" value="@boolValue" />
+                                }
+                            }
+                            else if (prop.PropertyType == typeof(DateTime))
+                            {
+                                var dateValue = currentValue != null ? ((DateTime)currentValue).ToString("yyyy-MM-dd") : "";
+                                <input type="date" class="form-control" id="@prop.Name" name="@prop.Name" 
+                                       value="@dateValue" @(isKey ? "readonly" : "") />
+                            }
+                            else if (prop.PropertyType == typeof(int) || prop.PropertyType == typeof(short) || prop.PropertyType == typeof(byte))
+                            {
+                                <input type="number" class="form-control" id="@prop.Name" name="@prop.Name" 
+                                       value="@currentValue" placeholder="Ingrese @prop.Name" 
+                                       @(isKey ? "readonly" : "") required />
+                            }
+                            else if (prop.PropertyType == typeof(decimal) || prop.PropertyType == typeof(double))
+                            {
+                                <input type="number" step="0.01" class="form-control" id="@prop.Name" name="@prop.Name" 
+                                       value="@currentValue" placeholder="Ingrese @prop.Name" 
+                                       @(isKey ? "readonly" : "") required />
+                            }
+                            else
+                            {
+                                <input type="text" class="form-control" id="@prop.Name" name="@prop.Name" 
+                                       value="@currentValue" placeholder="Ingrese @prop.Name" 
+                                       maxlength="@maxLength" @(isKey ? "readonly" : "") required />
+                            }
+                            <span class="text-danger" data-valmsg-for="@prop.Name"></span>
+                        </div>
+                    }
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a asp-action="Index" class="btn btn-secondary">
+                            <i class="bi bi-arrow-left"></i> Cancelar
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-save"></i> Actualizar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    
+    <script>
+        // Manejar FKs compuestas
+        document.querySelectorAll('.fk-composite').forEach(function(select) {
+            select.addEventListener('change', function() {
+                var value = this.value;
+                var parts = this.getAttribute('data-fk-parts').split(',');
+                var values = value.split(',');
+                
+                // Asignar cada parte del valor a su campo hidden correspondiente
+                parts.forEach(function(part, index) {
+                    var hiddenField = document.querySelector('.fk-part-' + part.trim());
+                    if (hiddenField && values[index]) {
+                        hiddenField.value = values[index].trim();
+                    }
+                });
+            });
+        });
+    </script>
+}

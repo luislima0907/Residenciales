@@ -1,0 +1,138 @@
+﻿@model System.Data.DataTable
+
+@{
+    ViewData["Title"] = "Resultados de la Consulta";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="mb-3">
+            <a asp-action="Index" class="btn btn-secondary btn-sm">
+                <i class="bi bi-arrow-left"></i> Volver a Consultas
+            </a>
+            <a href="javascript:window.print()" class="btn btn-outline-primary btn-sm">
+                <i class="bi bi-printer"></i> Imprimir
+            </a>
+        </div>
+
+        <h2 class="mb-4">Resultados de la Consulta</h2>
+
+        <div class="card shadow-sm">
+            <div class="card-header bg-success text-white">
+                <h5 class="mb-0">
+                    <i class="bi bi-table"></i> @ViewBag.ProcedureName
+                </h5>
+            </div>
+            <div class="card-body">
+                @if (ViewBag.Parameters != null && ((Dictionary<string, string>)ViewBag.Parameters).Any())
+                {
+                    <div class="alert alert-info">
+                        <strong><i class="bi bi-info-circle"></i> Parámetros utilizados:</strong>
+                        <ul class="mb-0">
+                            @foreach (var param in (Dictionary<string, string>)ViewBag.Parameters)
+                            {
+                                <li><strong>@param.Key:</strong> @param.Value</li>
+                            }
+                        </ul>
+                    </div>
+                }
+
+                @if (Model != null && Model.Rows.Count > 0)
+                {
+                    <div class="alert alert-success">
+                        <i class="bi bi-check-circle"></i> Se encontraron <strong>@Model.Rows.Count</strong> registro(s).
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover table-bordered">
+                            <thead class="table-dark">
+                                <tr>
+                                    @foreach (System.Data.DataColumn column in Model.Columns)
+                                    {
+                                        <th>@column.ColumnName</th>
+                                    }
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (System.Data.DataRow row in Model.Rows)
+                                {
+                                    <tr>
+                                        @foreach (var item in row.ItemArray)
+                                        {
+                                            <td>
+                                                @if (item is bool boolValue)
+                                                {
+                                                    <span class="badge @(boolValue ? "bg-success" : "bg-secondary")">
+                                                        @(boolValue ? "Sí" : "No")
+                                                    </span>
+                                                }
+                                                else if (item is DateTime dateValue)
+                                                {
+                                                    @dateValue.ToString("dd/MM/yyyy HH:mm")
+                                                }
+                                                else if (item is decimal || item is double || item is float)
+                                                {
+                                                    @string.Format("{0:N2}", item)
+                                                }
+                                                else if (item == DBNull.Value)
+                                                {
+                                                    <span class="text-muted">N/A</span>
+                                                }
+                                                else
+                                                {
+                                                    @item
+                                                }
+                                            </td>
+                                        }
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-warning" role="alert">
+                        <i class="bi bi-exclamation-triangle"></i> La consulta se ejecutó correctamente pero no devolvió resultados.
+                    </div>
+                }
+
+                <hr />
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <a asp-action="Execute" asp-route-procedureName="@ViewBag.ProcedureName" class="btn btn-primary">
+                        <i class="bi bi-arrow-repeat"></i> Ejecutar Nuevamente
+                    </a>
+                    <a asp-action="Index" class="btn btn-secondary">
+                        <i class="bi bi-list"></i> Ver Todas las Consultas
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Estilos para impresión
+        window.addEventListener('beforeprint', function() {
+            document.querySelector('.btn').style.display = 'none';
+        });
+        
+        window.addEventListener('afterprint', function() {
+            document.querySelector('.btn').style.display = 'inline-block';
+        });
+    </script>
+}
+
+<style>
+    @@media print {
+        .btn, .alert-info {
+            display: none !important;
+        }
+        .card {
+            border: none !important;
+            box-shadow: none !important;
+        }
+    }
+</style>
+

@@ -1,0 +1,319 @@
+﻿@{
+    ViewData["Title"] = "Sistema de Gestión Residencial";
+}
+
+<div class="container-fluid">
+    <!-- Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="text-center bg-primary text-white py-4 rounded shadow">
+                <h1 class="display-5 mb-2"> Sistema de Gestión Residencial</h1>
+                <p class="lead mb-0">Administra todas las entidades de tu complejo residencial</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Buscador -->
+    <div class="row mb-4">
+        <div class="col-md-6 offset-md-3">
+            <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-search"></i></span>
+                <input type="text" class="form-control" id="searchInput" placeholder="Buscar entidad..." />
+            </div>
+        </div>
+    </div>
+
+    <!-- Gestión Principal -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <h3 class="mb-3"><i class="bi bi-house-door"></i> Gestión Principal</h3>
+            <div class="row">
+                <div class="col-md-4 col-lg-3 mb-3">
+                    <div class="card h-100 shadow-sm entity-card" data-search="casa residencia vivienda">
+                        <div class="card-body text-center">
+                            <div class="mb-3">
+                                <i class="bi bi-house-fill text-primary" style="font-size: 2.5rem;"></i>
+                            </div>
+                            <h5 class="card-title">Casa</h5>
+                            <p class="card-text text-muted">Gestión de viviendas</p>
+                            <a href="/Casa" class="btn btn-outline-primary btn-sm">
+                                <i class="bi bi-arrow-right"></i> Acceder
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 col-lg-3 mb-3">
+                    <div class="card h-100 shadow-sm entity-card" data-search="cargo mensual facturacion pago">
+                        <div class="card-body text-center">
+                            <div class="mb-3">
+                                <i class="bi bi-credit-card text-success" style="font-size: 2.5rem;"></i>
+                            </div>
+                            <h5 class="card-title">Cargo Mensual Casa</h5>
+                            <p class="card-text text-muted">Facturación mensual</p>
+                            <a href="/CargoMensualCasa" class="btn btn-outline-success btn-sm">
+                                <i class="bi bi-arrow-right"></i> Acceder
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-lg-3 mb-3">
+                    <div class="card h-100 shadow-sm entity-card" data-search="cluster agrupacion sector">
+                        <div class="card-body text-center">
+                            <div class="mb-3">
+                                <i class="bi bi-diagram-3 text-info" style="font-size: 2.5rem;"></i>
+                            </div>
+                            <h5 class="card-title">Cluster</h5>
+                            <p class="card-text text-muted">Agrupaciones residenciales</p>
+                            <a href="/Cluster" class="btn btn-outline-info btn-sm">
+                                <i class="bi bi-arrow-right"></i> Acceder
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-lg-3 mb-3">
+                    <div class="card h-100 shadow-sm entity-card" data-search="residencial complejo conjunto">
+                        <div class="card-body text-center">
+                            <div class="mb-3">
+                                <i class="bi bi-buildings text-warning" style="font-size: 2.5rem;"></i>
+                            </div>
+                            <h5 class="card-title">Residencial</h5>
+                            <p class="card-text text-muted">Complejos residenciales</p>
+                            <a href="/Residencial" class="btn btn-outline-warning btn-sm">
+                                <i class="bi bi-arrow-right"></i> Acceder
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Personas y Roles -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <h3 class="mb-3"><i class="bi bi-people"></i> Personas y Roles</h3>
+            <div class="row">
+                <div class="col-md-4 col-lg-3 mb-3">
+                    <div class="card h-100 shadow-sm entity-card" data-search="persona residente inquilino propietario">
+                        <div class="card-body text-center">
+                            <div class="mb-3">
+                                <i class="bi bi-person-fill text-secondary" style="font-size: 2.5rem;"></i>
+                            </div>
+                            <h5 class="card-title">Persona</h5>
+                            <p class="card-text text-muted">Residentes del complejo</p>
+                            <a href="/Persona" class="btn btn-outline-secondary btn-sm">
+                                <i class="bi bi-arrow-right"></i> Acceder
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-lg-3 mb-3">
+                    <div class="card h-100 shadow-sm entity-card" data-search="rol persona tipo usuario">
+                        <div class="card-body text-center">
+                            <div class="mb-3">
+                                <i class="bi bi-person-badge text-primary" style="font-size: 2.5rem;"></i>
+                            </div>
+                            <h5 class="card-title">Persona Rol</h5>
+                            <p class="card-text text-muted">Roles de personas</p>
+                            <a href="/PersonaRol" class="btn btn-outline-primary btn-sm">
+                                <i class="bi bi-arrow-right"></i> Acceder
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-lg-3 mb-3">
+                    <div class="card h-100 shadow-sm entity-card" data-search="estado civil matrimonio soltero">
+                        <div class="card-body text-center">
+                            <div class="mb-3">
+                                <i class="bi bi-heart text-danger" style="font-size: 2.5rem;"></i>
+                            </div>
+                            <h5 class="card-title">Estado Civil</h5>
+                            <p class="card-text text-muted">Estados civiles</p>
+                            <a href="/EstadoCivil" class="btn btn-outline-danger btn-sm">
+                                <i class="bi bi-arrow-right"></i> Acceder
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Vehículos y Seguridad -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <h3 class="mb-3"><i class="bi bi-car-front"></i> Vehículos y Seguridad</h3>
+            <div class="row">
+                <div class="col-md-4 col-lg-3 mb-3">
+                    <div class="card h-100 shadow-sm entity-card" data-search="vehiculo carro auto transporte">
+                        <div class="card-body text-center">
+                            <div class="mb-3">
+                                <i class="bi bi-car-front-fill text-info" style="font-size: 2.5rem;"></i>
+                            </div>
+                            <h5 class="card-title">Vehículo</h5>
+                            <p class="card-text text-muted">Gestión de vehículos</p>
+                            <a href="/Vehiculo" class="btn btn-outline-info btn-sm">
+                                <i class="bi bi-arrow-right"></i> Acceder
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-lg-3 mb-3">
+                    <div class="card h-100 shadow-sm entity-card" data-search="garita seguridad control acceso">
+                        <div class="card-body text-center">
+                            <div class="mb-3">
+                                <i class="bi bi-shield-check text-success" style="font-size: 2.5rem;"></i>
+                            </div>
+                            <h5 class="card-title">Garita Seguridad</h5>
+                            <p class="card-text text-muted">Control de acceso</p>
+                            <a href="/GaritaSeguridad" class="btn btn-outline-success btn-sm">
+                                <i class="bi bi-arrow-right"></i> Acceder
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Administración y Finanzas -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <h3 class="mb-3"><i class="bi bi-cash-stack"></i> Administración y Finanzas</h3>
+            <div class="row">
+                <div class="col-md-4 col-lg-3 mb-3">
+                    <div class="card h-100 shadow-sm entity-card" data-search="multa sancion infraccion">
+                        <div class="card-body text-center">
+                            <div class="mb-3">
+                                <i class="bi bi-exclamation-triangle text-warning" style="font-size: 2.5rem;"></i>
+                            </div>
+                            <h5 class="card-title">Multa</h5>
+                            <p class="card-text text-muted">Sanciones y multas</p>
+                            <a href="/Multum" class="btn btn-outline-warning btn-sm">
+                                <i class="bi bi-arrow-right"></i> Acceder
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-lg-3 mb-3">
+                    <div class="card h-100 shadow-sm entity-card" data-search="estado cuenta facturacion balance">
+                        <div class="card-body text-center">
+                            <div class="mb-3">
+                                <i class="bi bi-receipt text-primary" style="font-size: 2.5rem;"></i>
+                            </div>
+                            <h5 class="card-title">Estado Cuenta</h5>
+                            <p class="card-text text-muted">Estados de cuenta</p>
+                            <a href="/EstadoCuentum" class="btn btn-outline-primary btn-sm">
+                                <i class="bi bi-arrow-right"></i> Acceder
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Botón para ver todas las entidades -->
+    <div class="row">
+        <div class="col-12 text-center">
+            <button class="btn btn-outline-dark btn-lg" id="showAllEntities">
+                <i class="bi bi-grid-3x3-gap"></i> Ver Todas las Entidades
+            </button>
+        </div>
+    </div>
+
+    <!-- Modal para todas las entidades -->
+    <div class="modal fade" id="allEntitiesModal" tabindex="-1">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Todas las Entidades</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row" id="allEntitiesContainer">
+                        <!-- Aquí se cargarán todas las entidades dinámicamente -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            // Funcionalidad de búsqueda
+            $('#searchInput').on('keyup', function() {
+                var searchTerm = $(this).val().toLowerCase();
+                
+                $('.entity-card').each(function() {
+                    var searchData = $(this).data('search').toLowerCase();
+                    var cardTitle = $(this).find('.card-title').text().toLowerCase();
+                    
+                    if (searchData.includes(searchTerm) || cardTitle.includes(searchTerm)) {
+                        $(this).closest('.col-md-4, .col-lg-3').show();
+                    } else {
+                        $(this).closest('.col-md-4, .col-lg-3').hide();
+                    }
+                });
+            });
+
+            // Mostrar todas las entidades
+            $('#showAllEntities').on('click', function() {
+                $('#allEntitiesModal').modal('show');
+                loadAllEntities();
+            });
+
+            // Función para cargar todas las entidades dinámicamente
+            function loadAllEntities() {
+                // Lista de todas las entidades (agregar según vayas creando)
+                var allEntities = [
+                    { name: 'Casa', icon: 'house-fill', color: 'primary', url: '/Casa' },
+                    { name: 'CargoMensualCasa', icon: 'credit-card', color: 'success', url: '/CargoMensualCasa' },
+                    { name: 'Cluster', icon: 'diagram-3', color: 'info', url: '/Cluster' },
+                    { name: 'Residencial', icon: 'buildings', color: 'warning', url: '/Residencial' },
+                    { name: 'Persona', icon: 'person-fill', color: 'secondary', url: '/Persona' },
+                    { name: 'PersonaRol', icon: 'person-badge', color: 'primary', url: '/PersonaRol' },
+                    { name: 'EstadoCivil', icon: 'heart', color: 'danger', url: '/EstadoCivil' },
+                    { name: 'Vehiculo', icon: 'car-front-fill', color: 'info', url: '/Vehiculo' },
+                    { name: 'GaritaSeguridad', icon: 'shield-check', color: 'success', url: '/GaritaSeguridad' },
+                    { name: 'Multum', icon: 'exclamation-triangle', color: 'warning', url: '/Multum' },
+                    { name: 'EstadoCuentum', icon: 'receipt', color: 'primary', url: '/EstadoCuentum' },
+                    { name: 'Sector', icon: 'geo-alt', color: 'info', url: '/Sector' },
+                    { name: 'Sucursal', icon: 'building', color: 'secondary', url: '/Sucursal' },
+                    { name: 'Departamento', icon: 'map', color: 'primary', url: '/Departamento' },
+                    { name: 'Municipio', icon: 'pin-map', color: 'success', url: '/Municipio' }
+                    // Agregar aquí las 32 entidades restantes según las vayas creando
+                ];
+
+                var container = $('#allEntitiesContainer');
+                container.empty();
+
+                allEntities.forEach(function(entity) {
+                    var card = `
+                        <div class="col-md-3 col-lg-2 mb-3">
+                            <div class="card h-100 shadow-sm text-center">
+                                <div class="card-body p-2">
+                                    <i class="bi bi-${entity.icon} text-${entity.color}" style="font-size: 1.5rem;"></i>
+                                    <h6 class="card-title mt-2 mb-1" style="font-size: 0.8rem;">${entity.name}</h6>
+                                    <a href="${entity.url}" class="btn btn-outline-${entity.color} btn-sm">
+                                        <i class="bi bi-arrow-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    container.append(card);
+                });
+            }
+        });
+    </script>
+}

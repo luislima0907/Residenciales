@@ -1,0 +1,39 @@
+﻿1.Construya una consulta que muestre cuántos vehículos posee cada vivienda. El procedimiento
+almacenado debe recibir como parámetro la residencia que se desea consultar (la residencia está
+formada por clúster y residencia).
+2. Construya una consulta que muestre cuántos vehículos ingresan de visitante por hora. El
+procedimiento almacenado debe recibir como parámetro un rango de fechas (del, al) para
+construir el reporte para ese periodo de tiempo en específico
+3. Construir un reporte de viviendas. Debe mostrar, por clúster, las viviendas con sus propietarios y
+si tiene inquilinos mostrar el nombre de los inquilinos.
+4. Construir un procedimiento almacenado que muestre los vehículos que pertenecen a una persona
+que ingresa todos los días entre las 23 horas de un día y la 1 am del día siguiente. Debe recibir
+como parámetro las fechas (del, al).
+5. Construya un procedimiento almacenado que reciba un periodo de tiempo y determine quién es
+el vecino que más ha pagado en ese período de tiempo.
+6. Construya un procedimiento almacenado que muestre todos los propietarios de condominio
+Diana II que son casados y menores de 30 años.
+7. Construya un procedimiento almacenado que determine quién es la persona que más ha sido
+presidente en una junta directiva.
+8. Construya un procedimiento almacenado que determine quién es la persona que nunca ha sido
+miembro de una junta directiva.
+9. Construya un procedimiento almacenado que dado un periodo tiempo determine si un guardia
+ha trabajado más de 24 horas en un turno.
+10. Construya una consulta que muestre cuántos guardias son hombres y cuántos son mujeres.
+11. Determine quién es el vecino que más veces ingresa y sale del condominio los días domingo.
+12. Determine cuál es la vivienda más atrasada en los pagos de mantenimiento.
+13. Determine cuál es del día del mes que más dinero se recibe.
+14. Determine cuál es la residencia que más recibos ha recibido.
+15. Construya un reporte que muestre por mes cuántos carros ingresaron por día.
+16. Identifique quién es la persona que más visita el condominio.
+17. Determine si existen inquilinos que son propietarios.
+18. Determine cuántos propietarios tienen licencia tipo A.
+19. Prepare una consulta que muestre si una persona debe pagar 150 por sobrepasar la cantidad de
+carros permitida por vivienda.
+20. Cree un procedimiento almacenado que muestre cuál es la residencia que más visitas recibe en
+un periodo de tiempo dado.
+21. Cuál es el concepto de multa más utilizado en un período de tiempo dado.
+22. Cuáles son las casas pendientes de pagar multas.
+23. Cuál es el mes del año donde han ocurrido más multas por concepto de desorden.
+24. Cuánto se ha recaudado por concepto de multas.
+25. Quién es el propietario con más multas.

@@ -1,0 +1,91 @@
+﻿@model List<WebDBFinal.Models.StoredProcedureInfo>
+
+@{
+    ViewData["Title"] = "Consultas y Reportes";
+    
+    // Desactivar caché completamente
+    Context.Response.Headers["Cache-Control"] = "no-cache, no-store, must-revalidate";
+    Context.Response.Headers["Pragma"] = "no-cache";
+    Context.Response.Headers["Expires"] = "0";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h2 class="mb-4">Consultas y Reportes del Sistema</h2>
+
+        @if (ViewBag.DebugMessage != null)
+        {
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>DEBUG:</strong> @ViewBag.DebugMessage
+                <br/><small>Total: @ViewBag.TotalProcedures | Únicos: @ViewBag.UniqueProcedures</small>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>¡Error!</strong> @TempData["ErrorMessage"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+
+        <div class="card shadow-sm">
+            <div class="card-header bg-info text-white">
+                <h5 class="mb-0"><i class="bi bi-file-earmark-bar-graph"></i> Procedimientos Almacenados Disponibles</h5>
+            </div>
+            <div class="card-body">
+                @if (Model != null && Model.Any())
+                {
+                    <div class="list-group">
+                        @foreach (var procedure in Model)
+                        {
+                            <div class="list-group-item list-group-item-action">
+                                <div class="d-flex w-100 justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="mb-1">@procedure.Name</h6>
+                                        <p class="mb-1 text-muted">@procedure.Description</p>
+                                        @if (procedure.Parameters.Any())
+                                        {
+                                            <small class="text-info">
+                                                <i class="bi bi-gear"></i> Requiere parámetros: 
+                                                @string.Join(", ", procedure.Parameters.Select(p => p.Name))
+                                            </small>
+                                        }
+                                        else
+                                        {
+                                            <small class="text-success">
+                                                <i class="bi bi-check-circle"></i> Sin parámetros requeridos
+                                            </small>
+                                        }
+                                    </div>
+                                    <div>
+                                        <a asp-action="Execute" asp-route-procedureName="@procedure.Name" 
+                                           class="btn btn-primary btn-sm">
+                                            <i class="bi bi-play-fill"></i> Ejecutar
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-warning" role="alert">
+                        <i class="bi bi-exclamation-triangle"></i> No se encontraron procedimientos almacenados que comiencen con 'sp_Consulta'.
+                        <br/><small>Asegúrate de que los procedimientos estén creados en la base de datos.</small>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        setTimeout(function() {
+            $('.alert').fadeOut('slow');
+        }, 5000);
+    </script>
+}

@@ -1,0 +1,51 @@
+﻿@model WebDBFinal.Entities.Residencial
+
+@{
+    ViewData["Title"] = "Editar Residencial";
+}
+
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <h2 class="mb-4">Editar Residencial</h2>
+
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <form asp-action="Edit" method="post">
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+                    <div class="mb-3">
+                        <label asp-for="CodigoResidencial" class="form-label">Código Residencial</label>
+                        <input asp-for="CodigoResidencial" class="form-control" readonly />
+                        <span asp-validation-for="CodigoResidencial" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Nombre" class="form-label">Nombre</label>
+                        <input asp-for="Nombre" class="form-control" placeholder="Ingrese el nombre del residencial" maxlength="100" />
+                        <span asp-validation-for="Nombre" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="ContactoPrincipal" class="form-label">Contacto Principal</label>
+                        <input asp-for="ContactoPrincipal" class="form-control" placeholder="Ingrese el contacto principal" maxlength="30" />
+                        <span asp-validation-for="ContactoPrincipal" class="text-danger"></span>
+                    </div>
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a asp-action="Index" class="btn btn-secondary">
+                            <i class="bi bi-arrow-left"></i> Cancelar
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-save"></i> Actualizar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
