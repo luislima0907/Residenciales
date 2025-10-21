@@ -12,9 +12,11 @@ public partial class Censo
     [Key]
     public int CodigoCenso { get; set; }
 
-    public DateOnly FechaInicio { get; set; }
+    [Column(TypeName = "date")]
+    public DateTime FechaInicio { get; set; }
 
-    public DateOnly FechaFin { get; set; }
+    [Column(TypeName = "date")]
+    public DateTime FechaFin { get; set; }
 
     public int Anio { get; set; }
 
