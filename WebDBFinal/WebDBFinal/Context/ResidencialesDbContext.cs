@@ -117,9 +117,15 @@ public partial class ResidencialesDbContext : DbContext
     public virtual DbSet<Vehiculo> Vehiculos { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=DESKTOP-9SBPDDD;Database=ResidencialesSanFrancisco;User Id=sa;Password=Hell0w0rld3312j$;TrustServerCertificate=True;");
-
+    {
+        if (!optionsBuilder.IsConfigured)
+        {
+            // Esto solo se usará si no se configura en Program.cs
+            //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
+            optionsBuilder.UseSqlServer("Server=DESKTOP-9SBPDDD;Database=ResidencialesSanFrancisco;User Id=sa;Password=Hell0w0rld3312j$;TrustServerCertificate=True;");
+        }  
+    }
+      
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<AplicacionDocumento>(entity =>
