@@ -1,0 +1,122 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\50246\\Desktop\\Residenciales\\WebDBFinal\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{D6347C1C-136E-45A3-B19B-F65F92D74EF5}|WebDBFinal\\WebDBFinal.csproj|c:\\users\\50246\\desktop\\residenciales\\webdbfinal\\webdbfinal\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{D6347C1C-136E-45A3-B19B-F65F92D74EF5}|WebDBFinal\\WebDBFinal.csproj|solutionrelative:webdbfinal\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D6347C1C-136E-45A3-B19B-F65F92D74EF5}|WebDBFinal\\WebDBFinal.csproj|c:\\users\\50246\\desktop\\residenciales\\webdbfinal\\webdbfinal\\controllers\\personacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D6347C1C-136E-45A3-B19B-F65F92D74EF5}|WebDBFinal\\WebDBFinal.csproj|solutionrelative:webdbfinal\\controllers\\personacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D6347C1C-136E-45A3-B19B-F65F92D74EF5}|WebDBFinal\\WebDBFinal.csproj|c:\\users\\50246\\desktop\\residenciales\\webdbfinal\\webdbfinal\\controllers\\casacontrolller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D6347C1C-136E-45A3-B19B-F65F92D74EF5}|WebDBFinal\\WebDBFinal.csproj|solutionrelative:webdbfinal\\controllers\\casacontrolller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D6347C1C-136E-45A3-B19B-F65F92D74EF5}|WebDBFinal\\WebDBFinal.csproj|c:\\users\\50246\\desktop\\residenciales\\webdbfinal\\webdbfinal\\controllers\\estadocivilcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D6347C1C-136E-45A3-B19B-F65F92D74EF5}|WebDBFinal\\WebDBFinal.csproj|solutionrelative:webdbfinal\\controllers\\estadocivilcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D6347C1C-136E-45A3-B19B-F65F92D74EF5}|WebDBFinal\\WebDBFinal.csproj|c:\\users\\50246\\desktop\\residenciales\\webdbfinal\\webdbfinal\\controllers\\tipopagocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D6347C1C-136E-45A3-B19B-F65F92D74EF5}|WebDBFinal\\WebDBFinal.csproj|solutionrelative:webdbfinal\\controllers\\tipopagocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D6347C1C-136E-45A3-B19B-F65F92D74EF5}|WebDBFinal\\WebDBFinal.csproj|c:\\users\\50246\\desktop\\residenciales\\webdbfinal\\webdbfinal\\controllers\\departamentocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D6347C1C-136E-45A3-B19B-F65F92D74EF5}|WebDBFinal\\WebDBFinal.csproj|solutionrelative:webdbfinal\\controllers\\departamentocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 5,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "PersonaController.cs",
+              "DocumentMoniker": "C:\\Users\\50246\\Desktop\\Residenciales\\WebDBFinal\\WebDBFinal\\Controllers\\PersonaController.cs",
+              "RelativeDocumentMoniker": "WebDBFinal\\Controllers\\PersonaController.cs",
+              "ToolTip": "C:\\Users\\50246\\Desktop\\Residenciales\\WebDBFinal\\WebDBFinal\\Controllers\\PersonaController.cs",
+              "RelativeToolTip": "WebDBFinal\\Controllers\\PersonaController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-21T06:45:23.242Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "CasaControlller.cs",
+              "DocumentMoniker": "C:\\Users\\50246\\Desktop\\Residenciales\\WebDBFinal\\WebDBFinal\\Controllers\\CasaControlller.cs",
+              "RelativeDocumentMoniker": "WebDBFinal\\Controllers\\CasaControlller.cs",
+              "ToolTip": "C:\\Users\\50246\\Desktop\\Residenciales\\WebDBFinal\\WebDBFinal\\Controllers\\CasaControlller.cs",
+              "RelativeToolTip": "WebDBFinal\\Controllers\\CasaControlller.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-21T06:43:35.724Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "EstadoCivilController.cs",
+              "DocumentMoniker": "C:\\Users\\50246\\Desktop\\Residenciales\\WebDBFinal\\WebDBFinal\\Controllers\\EstadoCivilController.cs",
+              "RelativeDocumentMoniker": "WebDBFinal\\Controllers\\EstadoCivilController.cs",
+              "ToolTip": "C:\\Users\\50246\\Desktop\\Residenciales\\WebDBFinal\\WebDBFinal\\Controllers\\EstadoCivilController.cs",
+              "RelativeToolTip": "WebDBFinal\\Controllers\\EstadoCivilController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAABBAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-21T06:35:24.173Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "TipoPagoController.cs",
+              "DocumentMoniker": "C:\\Users\\50246\\Desktop\\Residenciales\\WebDBFinal\\WebDBFinal\\Controllers\\TipoPagoController.cs",
+              "RelativeDocumentMoniker": "WebDBFinal\\Controllers\\TipoPagoController.cs",
+              "ToolTip": "C:\\Users\\50246\\Desktop\\Residenciales\\WebDBFinal\\WebDBFinal\\Controllers\\TipoPagoController.cs",
+              "RelativeToolTip": "WebDBFinal\\Controllers\\TipoPagoController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-21T06:17:01.305Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "DepartamentoController.cs",
+              "DocumentMoniker": "C:\\Users\\50246\\Desktop\\Residenciales\\WebDBFinal\\WebDBFinal\\Controllers\\DepartamentoController.cs",
+              "RelativeDocumentMoniker": "WebDBFinal\\Controllers\\DepartamentoController.cs",
+              "ToolTip": "C:\\Users\\50246\\Desktop\\Residenciales\\WebDBFinal\\WebDBFinal\\Controllers\\DepartamentoController.cs",
+              "RelativeToolTip": "WebDBFinal\\Controllers\\DepartamentoController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAABYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-21T06:16:27.967Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\50246\\Desktop\\Residenciales\\WebDBFinal\\WebDBFinal\\Views\\Home\\Index.cshtml",
+              "RelativeDocumentMoniker": "WebDBFinal\\Views\\Home\\Index.cshtml",
+              "ToolTip": "C:\\Users\\50246\\Desktop\\Residenciales\\WebDBFinal\\WebDBFinal\\Views\\Home\\Index.cshtml",
+              "RelativeToolTip": "WebDBFinal\\Views\\Home\\Index.cshtml",
+              "ViewState": "AgIAAEsAAAAAAAAAAAAmwGgAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-10-20T18:35:11.09Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

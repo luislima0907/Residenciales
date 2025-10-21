@@ -5,13 +5,14 @@ using System.Reflection;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using WebDBFinal.Services;
+using System.Globalization;
 
 namespace WebDBFinal.Controllers;
 
 public abstract class BaseController<T> : Controller where T : class, new()
 {
     protected readonly ResidencialesDbContext _context;
-    protected readonly ForeignKeyService _foreignKeyService;
+    protected readonly ForeignKeyService _foreignKey_service;
     protected abstract string EntityName { get; }
     protected abstract string SpCreate { get; }
     protected abstract string SpUpdate { get; }
@@ -20,7 +21,7 @@ public abstract class BaseController<T> : Controller where T : class, new()
     public BaseController(ResidencialesDbContext context, ForeignKeyService  foreignKeyService)
     {
         _context = context;
-        _foreignKeyService = foreignKeyService;
+        _foreignKey_service = foreignKeyService;
     }
 
     // GET: Index - Lista todas las entidades
@@ -73,8 +74,8 @@ public abstract class BaseController<T> : Controller where T : class, new()
     {
         try
         {
-            // Convertir el string de IDs en un array de objetos
-            var keyValues = id.Split(',').Select(k => (object)int.Parse(k.Trim())).ToArray();
+            // Convertir el string de IDs en un array de objetos con el tipo correcto
+            var keyValues = ParseKeyValues(id);
             var entity = await _context.Set<T>().FindAsync(keyValues);
             
             if (entity == null)
@@ -130,7 +131,7 @@ public abstract class BaseController<T> : Controller where T : class, new()
     {
         try
         {
-            var keyValues = keys.Split(',').Select(k => (object)int.Parse(k)).ToArray();
+            var keyValues = ParseKeyValues(keys);
             await _context.Database.ExecuteSqlRawAsync(
                 SpDelete, 
                 keyValues);
@@ -204,7 +205,7 @@ public abstract class BaseController<T> : Controller where T : class, new()
 
         foreach (var property in properties)
         {
-            var fkInfo = _foreignKeyService.GetForeignKeyInfo(property, typeof(T));
+            var fkInfo = _foreignKey_service.GetForeignKeyInfo(property, typeof(T));
             
             if (fkInfo != null)
             {
@@ -215,7 +216,7 @@ public abstract class BaseController<T> : Controller where T : class, new()
                 {
                     if (!processedEntities.Contains(entityKey))
                     {
-                        var items = await _foreignKeyService.GetRelatedRecordsAsync(fkInfo.RelatedEntityType);
+                        var items = await _foreignKey_service.GetRelatedRecordsAsync(fkInfo.RelatedEntityType);
                         
                         // Asignar los mismos datos a todas las partes de la FK compuesta
                         foreach (var keyPart in fkInfo.CompositeKeyParts)
@@ -231,7 +232,7 @@ public abstract class BaseController<T> : Controller where T : class, new()
                     // FK simple
                     if (!foreignKeyData.ContainsKey(property.Name))
                     {
-                        var items = await _foreignKeyService.GetRelatedRecordsAsync(fkInfo.RelatedEntityType);
+                        var items = await _foreignKey_service.GetRelatedRecordsAsync(fkInfo.RelatedEntityType);
                         foreignKeyData[property.Name] = items;
                     }
                 }
@@ -239,5 +240,45 @@ public abstract class BaseController<T> : Controller where T : class, new()
         }
 
         return foreignKeyData;
+    }
+
+    // Convierte la cadena de clave(s) recibida en objetos del tipo correcto para Find/ExecuteSqlRaw
+    private object[] ParseKeyValues(string id)
+    {
+        if (string.IsNullOrWhiteSpace(id))
+            return Array.Empty<object>();
+
+        var parts = id.Split(',').Select(p => p.Trim()).ToArray();
+        var keyProps = GetKeyProperties();
+        if (parts.Length != keyProps.Count)
+            throw new ArgumentException($"Número de claves en la cadena ('{id}') no coincide con el número de propiedades clave de {typeof(T).Name}.");
+
+        var result = new object[keyProps.Count];
+
+        for (int i = 0; i < keyProps.Count; i++)
+        {
+            var targetType = keyProps[i].PropertyType;
+            var raw = parts[i];
+
+            if (targetType == typeof(string))
+            {
+                result[i] = raw;
+            }
+            else if (targetType == typeof(Guid))
+            {
+                result[i] = Guid.Parse(raw);
+            }
+            else if (targetType.IsEnum)
+            {
+                result[i] = Enum.Parse(targetType, raw);
+            }
+            else
+            {
+                // Para tipos numéricos y otros tipos primitivos
+                result[i] = Convert.ChangeType(raw, targetType, CultureInfo.InvariantCulture);
+            }
+        }
+
+        return result;
     }
 }
