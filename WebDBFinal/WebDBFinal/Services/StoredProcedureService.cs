@@ -143,14 +143,28 @@ public class StoredProcedureService
             command.CommandType = CommandType.StoredProcedure;
             command.CommandTimeout = 120; // 2 minutos de timeout
 
-            // Agregar parámetros
+            // Obtener información de los parámetros del procedimiento
+            var procedureParams = await GetProcedureParameterTypesAsync(procedureName);
+
+            // Agregar parámetros con conversión de tipo apropiada
             foreach (var param in parameters)
             {
-                var value = string.IsNullOrWhiteSpace(param.Value) ? DBNull.Value : (object)param.Value;
-                // Si la conexión es SqlConnection, usamos SqlParameter; de lo contrario creamos un DbParameter genérico
                 var dbParam = command.CreateParameter();
                 dbParam.ParameterName = $"@{param.Key}";
-                dbParam.Value = value;
+                
+                // Obtener el tipo SQL del parámetro
+                var sqlType = procedureParams.ContainsKey(param.Key) ? procedureParams[param.Key] : "nvarchar";
+                
+                // Convertir el valor al tipo apropiado
+                if (string.IsNullOrWhiteSpace(param.Value))
+                {
+                    dbParam.Value = DBNull.Value;
+                }
+                else
+                {
+                    dbParam.Value = ConvertParameterValue(param.Value, sqlType);
+                }
+                
                 command.Parameters.Add(dbParam);
             }
 
@@ -164,6 +178,87 @@ public class StoredProcedureService
         }
 
         return dataTable;
+    }
+
+    // Obtener los tipos de parámetros de un procedimiento almacenado
+    private async Task<Dictionary<string, string>> GetProcedureParameterTypesAsync(string procedureName)
+    {
+        var parameterTypes = new Dictionary<string, string>();
+        
+        var query = @"
+            SELECT 
+                p.name as ParameterName,
+                TYPE_NAME(p.user_type_id) as DataType
+            FROM sys.parameters p
+            INNER JOIN sys.procedures pr ON p.object_id = pr.object_id
+            WHERE pr.name = @ProcedureName
+            AND p.name != ''
+            ORDER BY p.parameter_id";
+
+        var connection = _context.Database.GetDbConnection();
+        
+        try
+        {
+            if (connection.State != ConnectionState.Open)
+                await connection.OpenAsync();
+
+            using var command = connection.CreateCommand();
+            command.CommandText = query;
+            var sqlParam = command.CreateParameter();
+            sqlParam.ParameterName = "@ProcedureName";
+            sqlParam.Value = procedureName;
+            command.Parameters.Add(sqlParam);
+            
+            using var reader = await command.ExecuteReaderAsync();
+            while (await reader.ReadAsync())
+            {
+                var paramName = reader.GetString(0).TrimStart('@');
+                var dataType = reader.GetString(1);
+                parameterTypes[paramName] = dataType;
+            }
+        }
+        finally
+        {
+            // No cerramos la conexión aquí porque la gestiona el contexto
+        }
+
+        return parameterTypes;
+    }
+
+    // Convertir un valor de string al tipo apropiado según el tipo SQL
+    private object ConvertParameterValue(string value, string sqlType)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+            return DBNull.Value;
+
+        try
+        {
+            return sqlType.ToLower() switch
+            {
+                "int" => int.Parse(value),
+                "bigint" => long.Parse(value),
+                "smallint" => short.Parse(value),
+                "tinyint" => byte.Parse(value),
+                "decimal" => decimal.Parse(value),
+                "numeric" => decimal.Parse(value),
+                "float" => double.Parse(value),
+                "real" => float.Parse(value),
+                "money" => decimal.Parse(value),
+                "smallmoney" => decimal.Parse(value),
+                "bit" => value.ToLower() == "true" || value == "1",
+                "date" => DateTime.Parse(value),
+                "datetime" => DateTime.Parse(value),
+                "datetime2" => DateTime.Parse(value),
+                "smalldatetime" => DateTime.Parse(value),
+                "time" => TimeSpan.Parse(value),
+                _ => value // Por defecto mantener como string
+            };
+        }
+        catch (Exception)
+        {
+            // Si hay error en la conversión, retornar el valor original como string
+            return value;
+        }
     }
 
     // Mapear tipos de SQL a tipos de C#/HTML

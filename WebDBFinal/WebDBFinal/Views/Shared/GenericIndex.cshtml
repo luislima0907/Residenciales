@@ -42,7 +42,36 @@
                                 <tr>
                                     @foreach (var prop in properties)
                                     {
-                                        <th>@prop.Name</th>
+                                        var columnName = prop.Name;
+                                        
+                                        // Personalizar nombres de columnas para hacerlos más amigables
+                                        if (columnName == "CodigoPersonaNavigation")
+                                        {
+                                            columnName = "Persona";
+                                        }
+                                        else if (columnName == "CodigoTipoTelefonoNavigation")
+                                        {
+                                            columnName = "Tipo Teléfono";
+                                        }
+                                        else if (columnName == "CodigoDepartamentoNavigation")
+                                        {
+                                            columnName = "Departamento";
+                                        }
+                                        else if (columnName == "CodigoMarcaNavigation")
+                                        {
+                                            columnName = "Marca";
+                                        }
+                                        else if (columnName == "LineaVehiculo")
+                                        {
+                                            columnName = "Línea Vehículo";
+                                        }
+                                        else if (columnName.EndsWith("Navigation"))
+                                        {
+                                            // Quitar "Navigation" y "Codigo" del nombre
+                                            columnName = columnName.Replace("Navigation", "").Replace("Codigo", "");
+                                        }
+                                        
+                                        <th>@columnName</th>
                                     }
                                     <th class="text-center">Acciones</th>
                                 </tr>
@@ -70,6 +99,86 @@
                                                 else if (value is DateTime dateValue)
                                                 {
                                                     @dateValue.ToString("dd/MM/yyyy")
+                                                }
+                                                else if (prop.Name == "LineaVehiculo" && value != null)
+                                                {
+                                                    @* Mostrar LineaVehiculo de forma legible *@
+                                                    var lineaVehiculo = value as dynamic;
+                                                    if (lineaVehiculo != null)
+                                                    {
+                                                        try
+                                                        {
+                                                            var marca = lineaVehiculo.CodigoMarcaNavigation?.Descripcion ?? "N/A";
+                                                            var linea = lineaVehiculo.Descripcion ?? "N/A";
+                                                            @($"{marca} - {linea}")
+                                                        }
+                                                        catch
+                                                        {
+                                                            @(value.ToString())
+                                                        }
+                                                    }
+                                                }
+                                                else if (prop.Name == "CodigoPersonaNavigation" && value != null)
+                                                {
+                                                    @* Mostrar Persona de forma legible *@
+                                                    var persona = value as dynamic;
+                                                    if (persona != null)
+                                                    {
+                                                        try
+                                                        {
+                                                            var nombreCompleto = $"{persona.PrimerNombre ?? ""} {persona.SegundoNombre ?? ""} {persona.PrimerApellido ?? ""} {persona.SegundoApellido ?? ""}".Trim();
+                                                            @nombreCompleto
+                                                        }
+                                                        catch
+                                                        {
+                                                            @(value.ToString())
+                                                        }
+                                                    }
+                                                }
+                                                else if (prop.Name == "CodigoTipoTelefonoNavigation" && value != null)
+                                                {
+                                                    @* Mostrar TipoTelefono de forma legible *@
+                                                    var tipoTelefono = value as dynamic;
+                                                    if (tipoTelefono != null)
+                                                    {
+                                                        try
+                                                        {
+                                                            @(tipoTelefono.Descripcion ?? value.ToString())
+                                                        }
+                                                        catch
+                                                        {
+                                                            @(value.ToString())
+                                                        }
+                                                    }
+                                                }
+                                                else if (prop.Name == "CodigoSucursalNavigation" && value != null)
+                                                {
+                                                    @* Mostrar Sucursal de forma legible *@
+                                                    var sucursal = value as dynamic;
+                                                    if (sucursal != null)
+                                                    {
+                                                        try
+                                                        {
+                                                            @(sucursal.Descripcion ?? value.ToString())
+                                                        }
+                                                        catch
+                                                        {
+                                                            @(value.ToString())
+                                                        }
+                                                    }
+                                                }
+                                                else if (value != null && value.GetType().Namespace == "WebDBFinal.Entities")
+                                                {
+                                                    @* Para otras entidades de navegación, intentar mostrar un campo descriptivo *@
+                                                    var descripcionProp = value.GetType().GetProperty("Descripcion");
+                                                    if (descripcionProp != null)
+                                                    {
+                                                        @(descripcionProp.GetValue(value)?.ToString() ?? value.ToString())
+                                                    }
+                                                    else
+                                                    {
+                                                        @(value.ToString())
+                                                    }
                                                 }
                                                 else
                                                 {

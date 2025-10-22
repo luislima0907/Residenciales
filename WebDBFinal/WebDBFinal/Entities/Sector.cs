@@ -16,12 +16,6 @@ public partial class Sector
     [Unicode(false)]
     public string Nombre { get; set; } = null!;
 
-    [StringLength(100)]
-    [Unicode(false)]
-    public string Descripcion { get; set; } = null!;
-
-    public short CantidadDeCasas { get; set; }
-
     [InverseProperty("CodigoSectorNavigation")]
     public virtual ICollection<Cluster> Clusters { get; set; } = new List<Cluster>();
 }

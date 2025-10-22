@@ -160,13 +160,35 @@ public abstract class BaseController<T> : Controller where T : class, new()
     protected List<PropertyInfo> GetEditableProperties()
     {
         return typeof(T).GetProperties()
-            .Where(p => !p.PropertyType.IsGenericType && 
-                       (p.PropertyType.IsPrimitive || 
-                        p.PropertyType == typeof(string) || 
-                        p.PropertyType == typeof(decimal) || 
-                        p.PropertyType == typeof(DateTime) ||
-                        p.PropertyType == typeof(DateOnly) ||
-                        p.PropertyType == typeof(bool)))
+            .Where(p => {
+                var type = p.PropertyType;
+                var underlyingType = Nullable.GetUnderlyingType(type);
+                
+                // Si es nullable, obtener el tipo subyacente
+                if (underlyingType != null)
+                {
+                    type = underlyingType;
+                }
+                
+                return !p.PropertyType.IsGenericType || underlyingType != null;
+            })
+            .Where(p => {
+                var type = p.PropertyType;
+                var underlyingType = Nullable.GetUnderlyingType(type);
+                
+                // Si es nullable, obtener el tipo subyacente
+                if (underlyingType != null)
+                {
+                    type = underlyingType;
+                }
+                
+                return type.IsPrimitive || 
+                       type == typeof(string) || 
+                       type == typeof(decimal) || 
+                       type == typeof(DateTime) ||
+                       type == typeof(DateOnly) ||
+                       type == typeof(bool);
+            })
             .Where(p => p.GetCustomAttribute<InversePropertyAttribute>() == null)
             .ToList();
     }

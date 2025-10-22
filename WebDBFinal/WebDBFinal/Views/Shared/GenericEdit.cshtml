@@ -11,13 +11,20 @@
     var foreignKeyData = ViewBag.ForeignKeyData as Dictionary<string, List<DropdownItem>> ?? new Dictionary<string, List<DropdownItem>>();
     var currentClusterValue = ViewBag.CurrentClusterValue?.ToString() ?? "";
     var currentCasaValue = ViewBag.CurrentCasaValue?.ToString() ?? "";
-    var currentForeignKeyValue = !string.IsNullOrEmpty(currentClusterValue) ? currentClusterValue : currentCasaValue;
+    var currentLineaVehiculoValue = ViewBag.CurrentLineaVehiculoValue?.ToString() ?? "";
+    var currentForeignKeyValue = !string.IsNullOrEmpty(currentClusterValue) ? currentClusterValue : 
+                                  (!string.IsNullOrEmpty(currentCasaValue) ? currentCasaValue : currentLineaVehiculoValue);
     var renderedFKs = new HashSet<string>();
     
     // Detectar si estamos editando un Cluster
     var isCluster = ViewBag.EntityName == "Cluster";
     var originalCodigoSucursal = ViewBag.OriginalCodigoSucursal;
     var originalCodigoSector = ViewBag.OriginalCodigoSector;
+    
+    // Detectar si estamos editando una LineaVehiculo
+    var isLineaVehiculo = ViewBag.EntityName == "LineaVehiculo";
+    var originalCodigoLinea = ViewBag.OriginalCodigoLinea;
+    var originalCodigoMarca = ViewBag.OriginalCodigoMarca;
 }
 
 <div class="row">
@@ -36,12 +43,22 @@
                         <input type="hidden" name="OriginalCodigoSector" value="@originalCodigoSector" />
                     }
 
+                    @* Si es LineaVehiculo, agregar campos ocultos para valores originales *@
+                    @if (isLineaVehiculo && originalCodigoLinea != null && originalCodigoMarca != null)
+                    {
+                        <input type="hidden" name="OriginalCodigoLinea" value="@originalCodigoLinea" />
+                        <input type="hidden" name="OriginalCodigoMarca" value="@originalCodigoMarca" />
+                    }
+
                     @foreach (var prop in properties)
                     {
                         var isKey = keyProperties.Any(k => k.Name == prop.Name);
                         
                         // Para Cluster, permitir editar CodigoSucursal y CodigoSector aunque sean keys
                         var isEditableKey = isCluster && (prop.Name == "CodigoSucursal" || prop.Name == "CodigoSector");
+                        
+                        // Para LineaVehiculo, NO permitir editar CodigoLinea ni CodigoMarca (llave primaria compuesta)
+                        // El procedimiento actual solo permite actualizar la Descripcion
                         var shouldBeReadonly = isKey && !isEditableKey;
                         
                         var stringLengthAttr = prop.GetCustomAttribute<StringLengthAttribute>();
@@ -112,13 +129,25 @@
                                     var allFKParts = new List<string> { prop.Name };
                                     allFKParts.AddRange(relatedProps);
                                     
+                                    // Construir el valor compuesto actual juntando los valores de todas las partes de la FK
+                                    var currentCompositeValueParts = new List<string>();
+                                    foreach (var part in allFKParts)
+                                    {
+                                        var partValue = Model.GetType().GetProperty(part)?.GetValue(Model)?.ToString() ?? "";
+                                        if (!string.IsNullOrEmpty(partValue))
+                                        {
+                                            currentCompositeValueParts.Add(partValue);
+                                        }
+                                    }
+                                    var currentCompositeValue = string.Join(",", currentCompositeValueParts);
+                                    
                                     <select class="form-select fk-composite" 
                                             data-fk-parts="@string.Join(",", allFKParts)" 
                                             @(shouldBeReadonly ? "disabled" : "") @(isRequired ? "required" : "")>
                                         <option value="">-- Seleccione (@string.Join(", ", allFKParts)) --</option>
                                         @foreach (var item in items)
                                         {
-                                            var isSelected = item.Value == currentForeignKeyValue;
+                                            var isSelected = !string.IsNullOrEmpty(currentCompositeValue) && item.Value == currentCompositeValue;
                                             @if (isSelected)
                                             {
                                                 <option value="@item.Value" selected>@item.Text</option>
