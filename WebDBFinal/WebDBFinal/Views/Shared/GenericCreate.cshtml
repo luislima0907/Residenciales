@@ -24,6 +24,38 @@
                         var stringLengthAttr = prop.GetCustomAttribute<StringLengthAttribute>();
                         var maxLength = stringLengthAttr?.MaximumLength ?? 100;
                         var hasForeignKey = foreignKeyData.ContainsKey(prop.Name);
+                        
+                        // Detectar si el campo es nullable correctamente
+                        var underlyingType = Nullable.GetUnderlyingType(prop.PropertyType);
+                        var isNullableValueType = underlyingType != null;
+                        
+                        // Para strings, verificar si tiene Required attribute O si el nombre del campo 
+                        // indica que es obligatorio (no contiene "Segundo", "Tercer", etc.)
+                        var hasRequiredAttribute = prop.GetCustomAttribute<RequiredAttribute>() != null;
+                        var isStringType = prop.PropertyType == typeof(string);
+                        
+                        // Lista de campos que sabemos que son opcionales para Persona
+                        var optionalFieldNames = new[] { "SegundoNombre", "TercerNombre", "SegundoApellido", "TercerApellido" };
+                        var isOptionalByName = optionalFieldNames.Contains(prop.Name);
+                        
+                        // Un campo es requerido si:
+                        // - Es un value type no nullable (int, DateTime, etc.)
+                        // - Es un string con [Required]
+                        // - Es un string que NO está en la lista de opcionales
+                        var isRequired = (!isNullableValueType && prop.PropertyType.IsValueType) || 
+                                        (isStringType && hasRequiredAttribute) ||
+                                        (isStringType && !isOptionalByName && !hasRequiredAttribute);
+                        
+                        // Para campos string sin [Required] explícito, revisar si termina en = null!
+                        if (isStringType && !hasRequiredAttribute && !isOptionalByName)
+                        {
+                            // Si no tiene Required pero tampoco está en la lista de opcionales, es requerido
+                            isRequired = true;
+                        }
+                        else if (isStringType && isOptionalByName)
+                        {
+                            isRequired = false;
+                        }
 
                         // Si ya renderizamos este grupo de FK compuesta, saltarlo
                         if (hasForeignKey && renderedFKs.Contains(prop.Name))
@@ -34,7 +66,10 @@
                         <div class="mb-3">
                             <label for="@prop.Name" class="form-label">
                                 @prop.Name
-                                <span class="text-danger">*</span>
+                                @if (isRequired)
+                                {
+                                    <span class="text-danger">*</span>
+                                }
                             </label>
                             
                             @if (hasForeignKey)
@@ -55,7 +90,7 @@
                                     
                                     <select class="form-select fk-composite" 
                                             data-fk-parts="@string.Join(",", allFKParts)" 
-                                            required>
+                                            @(isRequired ? "required" : "")>
                                         <option value="">-- Seleccione (@string.Join(", ", allFKParts)) --</option>
                                         @foreach (var item in items)
                                         {
@@ -74,17 +109,17 @@
                                 else
                                 {
                                     // FK Simple
-                                    <select class="form-select" id="@prop.Name" name="@prop.Name" required>
+                                    <select class="form-select" id="@prop.Name" name="@prop.Name" @(isRequired ? "required" : "")>
                                         <option value="">-- Seleccione @prop.Name --</option>
                                         @foreach (var item in items)
                                         {
                                             <option value="@item.Value">@item.Text</option>
                                         }
                                     </select>
-                                    <small class="text-muted">Seleccione de la lista</small>
+                                    <small class="text-muted">@(!isRequired ? "Opcional" : "Seleccione de la lista")</small>
                                 }
                             }
-                            else if (prop.PropertyType == typeof(bool))
+                            else if (prop.PropertyType == typeof(bool) || prop.PropertyType == typeof(bool?))
                             {
                                 <div class="form-check">
                                     <input type="checkbox" class="form-check-input" id="@prop.Name" name="@prop.Name" />
@@ -93,24 +128,43 @@
                                     </label>
                                 </div>
                             }
-                            else if (prop.PropertyType == typeof(DateTime))
+                            else if (prop.PropertyType == typeof(DateTime) || prop.PropertyType == typeof(DateTime?) || 
+                                     prop.PropertyType == typeof(DateOnly) || prop.PropertyType == typeof(DateOnly?))
                             {
-                                <input type="date" class="form-control" id="@prop.Name" name="@prop.Name" required />
+                                <input type="date" class="form-control" id="@prop.Name" name="@prop.Name" @(isRequired ? "required" : "") />
+                                @if (!isRequired)
+                                {
+                                    <small class="text-muted">Opcional</small>
+                                }
                             }
-                            else if (prop.PropertyType == typeof(int) || prop.PropertyType == typeof(short) || prop.PropertyType == typeof(byte))
+                            else if (prop.PropertyType == typeof(int) || prop.PropertyType == typeof(short) || prop.PropertyType == typeof(byte) ||
+                                     prop.PropertyType == typeof(int?) || prop.PropertyType == typeof(short?) || prop.PropertyType == typeof(byte?))
                             {
                                 <input type="number" class="form-control" id="@prop.Name" name="@prop.Name" 
-                                       placeholder="Ingrese @prop.Name" required />
+                                       placeholder="Ingrese @prop.Name" @(isRequired ? "required" : "") />
+                                @if (!isRequired)
+                                {
+                                    <small class="text-muted">Opcional</small>
+                                }
                             }
-                            else if (prop.PropertyType == typeof(decimal) || prop.PropertyType == typeof(double))
+                            else if (prop.PropertyType == typeof(decimal) || prop.PropertyType == typeof(double) ||
+                                     prop.PropertyType == typeof(decimal?) || prop.PropertyType == typeof(double?))
                             {
                                 <input type="number" step="0.01" class="form-control" id="@prop.Name" name="@prop.Name" 
-                                       placeholder="Ingrese @prop.Name" required />
+                                       placeholder="Ingrese @prop.Name" @(isRequired ? "required" : "") />
+                                @if (!isRequired)
+                                {
+                                    <small class="text-muted">Opcional</small>
+                                }
                             }
                             else
                             {
                                 <input type="text" class="form-control" id="@prop.Name" name="@prop.Name" 
-                                       placeholder="Ingrese @prop.Name" maxlength="@maxLength" required />
+                                       placeholder="Ingrese @prop.Name" maxlength="@maxLength" @(isRequired ? "required" : "") />
+                                @if (!isRequired)
+                                {
+                                    <small class="text-muted">Opcional</small>
+                                }
                             }
                             <span class="text-danger" data-valmsg-for="@prop.Name"></span>
                         </div>

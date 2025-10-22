@@ -13,6 +13,11 @@
     var currentCasaValue = ViewBag.CurrentCasaValue?.ToString() ?? "";
     var currentForeignKeyValue = !string.IsNullOrEmpty(currentClusterValue) ? currentClusterValue : currentCasaValue;
     var renderedFKs = new HashSet<string>();
+    
+    // Detectar si estamos editando un Cluster
+    var isCluster = ViewBag.EntityName == "Cluster";
+    var originalCodigoSucursal = ViewBag.OriginalCodigoSucursal;
+    var originalCodigoSector = ViewBag.OriginalCodigoSector;
 }
 
 <div class="row">
@@ -24,13 +29,57 @@
                 <form asp-action="Edit" method="post">
                     <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
 
+                    @* Si es Cluster, agregar campos ocultos para valores originales *@
+                    @if (isCluster && originalCodigoSucursal != null && originalCodigoSector != null)
+                    {
+                        <input type="hidden" name="OriginalCodigoSucursal" value="@originalCodigoSucursal" />
+                        <input type="hidden" name="OriginalCodigoSector" value="@originalCodigoSector" />
+                    }
+
                     @foreach (var prop in properties)
                     {
                         var isKey = keyProperties.Any(k => k.Name == prop.Name);
+                        
+                        // Para Cluster, permitir editar CodigoSucursal y CodigoSector aunque sean keys
+                        var isEditableKey = isCluster && (prop.Name == "CodigoSucursal" || prop.Name == "CodigoSector");
+                        var shouldBeReadonly = isKey && !isEditableKey;
+                        
                         var stringLengthAttr = prop.GetCustomAttribute<StringLengthAttribute>();
                         var maxLength = stringLengthAttr?.MaximumLength ?? 100;
                         var currentValue = prop.GetValue(Model);
                         var hasForeignKey = foreignKeyData.ContainsKey(prop.Name);
+
+                        // Detectar si el campo es nullable correctamente
+                        var underlyingType = Nullable.GetUnderlyingType(prop.PropertyType);
+                        var isNullableValueType = underlyingType != null;
+                        
+                        // Para strings, verificar si tiene Required attribute O si el nombre del campo 
+                        // indica que es obligatorio (no contiene "Segundo", "Tercer", etc.)
+                        var hasRequiredAttribute = prop.GetCustomAttribute<RequiredAttribute>() != null;
+                        var isStringType = prop.PropertyType == typeof(string);
+                        
+                        // Lista de campos que sabemos que son opcionales para Persona
+                        var optionalFieldNames = new[] { "SegundoNombre", "TercerNombre", "SegundoApellido", "TercerApellido" };
+                        var isOptionalByName = optionalFieldNames.Contains(prop.Name);
+                        
+                        // Un campo es requerido si:
+                        // - Es un value type no nullable (int, DateTime, etc.)
+                        // - Es un string con [Required]
+                        // - Es un string que NO está en la lista de opcionales
+                        var isRequired = (!isNullableValueType && prop.PropertyType.IsValueType) || 
+                                        (isStringType && hasRequiredAttribute) ||
+                                        (isStringType && !isOptionalByName && !hasRequiredAttribute);
+                        
+                        // Para campos string sin [Required] explícito, revisar si termina en = null!
+                        if (isStringType && !hasRequiredAttribute && !isOptionalByName)
+                        {
+                            // Si no tiene Required pero tampoco está en la lista de opcionales, es requerido
+                            isRequired = true;
+                        }
+                        else if (isStringType && isOptionalByName)
+                        {
+                            isRequired = false;
+                        }
 
                         // Si ya renderizamos este grupo de FK compuesta, saltarlo
                         if (hasForeignKey && renderedFKs.Contains(prop.Name))
@@ -39,7 +88,13 @@
                         }
 
                         <div class="mb-3">
-                            <label for="@prop.Name" class="form-label">@prop.Name</label>
+                            <label for="@prop.Name" class="form-label">
+                                @prop.Name
+                                @if (isRequired)
+                                {
+                                    <span class="text-danger">*</span>
+                                }
+                            </label>
                             
                             @if (hasForeignKey)
                             {
@@ -59,7 +114,7 @@
                                     
                                     <select class="form-select fk-composite" 
                                             data-fk-parts="@string.Join(",", allFKParts)" 
-                                            @(isKey ? "disabled" : "") required>
+                                            @(shouldBeReadonly ? "disabled" : "") @(isRequired ? "required" : "")>
                                         <option value="">-- Seleccione (@string.Join(", ", allFKParts)) --</option>
                                         @foreach (var item in items)
                                         {
@@ -78,7 +133,7 @@
                                     @foreach (var part in allFKParts)
                                     {
                                         var partValue = Model.GetType().GetProperty(part)?.GetValue(Model)?.ToString() ?? "";
-                                        <input type="hidden" name="@part" class="fk-part-@part" value="@partValue" @(isKey ? "" : "") />
+                                        <input type="hidden" name="@part" class="fk-part-@part" value="@partValue" />
                                         renderedFKs.Add(part);
                                     }
                                     
@@ -88,7 +143,7 @@
                                 {
                                     // FK Simple
                                     var currentValueStr = currentValue?.ToString() ?? "";
-                                    <select class="form-select" id="@prop.Name" name="@prop.Name" @(isKey ? "disabled" : "") required>
+                                    <select class="form-select" id="@prop.Name" name="@prop.Name" @(shouldBeReadonly ? "disabled" : "") @(isRequired ? "required" : "")>
                                         <option value="">-- Seleccione @prop.Name --</option>
                                         @foreach (var item in items)
                                         {
@@ -103,54 +158,104 @@
                                             }
                                         }
                                     </select>
-                                    @if (isKey)
+                                    @if (shouldBeReadonly)
                                     {
                                         <input type="hidden" name="@prop.Name" value="@currentValue" />
+                                        <small class="text-muted">Este campo no se puede modificar</small>
                                     }
-                                    <small class="text-muted">Seleccione de la lista</small>
+                                    else if (isEditableKey)
+                                    {
+                                        <small class="text-muted">Puede cambiar este valor</small>
+                                    }
+                                    else if (!isRequired)
+                                    {
+                                        <small class="text-muted">Opcional</small>
+                                    }
+                                    else
+                                    {
+                                        <small class="text-muted">Seleccione de la lista</small>
+                                    }
                                 }
                             }
-                            else if (prop.PropertyType == typeof(bool))
+                            else if (prop.PropertyType == typeof(bool) || prop.PropertyType == typeof(bool?))
                             {
                                 var boolValue = currentValue != null ? Convert.ToBoolean(currentValue) : false;
                                 <div class="form-check">
                                     <input type="checkbox" class="form-check-input" id="@prop.Name" name="@prop.Name" 
-                                           value="true" @(boolValue ? "checked" : "") @(isKey ? "disabled" : "") />
+                                           value="true" @(boolValue ? "checked" : "") @(shouldBeReadonly ? "disabled" : "") />
                                     <input type="hidden" name="@prop.Name" value="false" />
                                     <label class="form-check-label" for="@prop.Name">
                                         Activar
                                     </label>
                                 </div>
-                                @if (isKey)
+                                @if (shouldBeReadonly)
                                 {
                                     <input type="hidden" name="@prop.Name" value="@boolValue" />
                                 }
                             }
-                            else if (prop.PropertyType == typeof(DateTime))
+                            else if (prop.PropertyType == typeof(DateTime) || prop.PropertyType == typeof(DateTime?) ||
+                                     prop.PropertyType == typeof(DateOnly) || prop.PropertyType == typeof(DateOnly?))
                             {
-                                var dateValue = currentValue != null ? ((DateTime)currentValue).ToString("yyyy-MM-dd") : "";
+                                var dateValue = "";
+                                if (currentValue != null)
+                                {
+                                    if (currentValue is DateTime dt)
+                                        dateValue = dt.ToString("yyyy-MM-dd");
+                                    else if (currentValue is DateOnly d)
+                                        dateValue = d.ToString("yyyy-MM-dd");
+                                }
                                 <input type="date" class="form-control" id="@prop.Name" name="@prop.Name" 
-                                       value="@dateValue" @(isKey ? "readonly" : "") />
+                                       value="@dateValue" @(shouldBeReadonly ? "readonly" : "") @(isRequired ? "required" : "") />
+                                @if (!isRequired && !shouldBeReadonly)
+                                {
+                                    <small class="text-muted">Opcional</small>
+                                }
                             }
-                            else if (prop.PropertyType == typeof(int) || prop.PropertyType == typeof(short) || prop.PropertyType == typeof(byte))
+                            else if (prop.PropertyType == typeof(int) || prop.PropertyType == typeof(short) || prop.PropertyType == typeof(byte) ||
+                                     prop.PropertyType == typeof(int?) || prop.PropertyType == typeof(short?) || prop.PropertyType == typeof(byte?))
                             {
                                 <input type="number" class="form-control" id="@prop.Name" name="@prop.Name" 
                                        value="@currentValue" placeholder="Ingrese @prop.Name" 
-                                       @(isKey ? "readonly" : "") required />
+                                       @(shouldBeReadonly ? "readonly" : "") @(isRequired ? "required" : "") />
+                                @if (shouldBeReadonly)
+                                {
+                                    <small class="text-muted">Este campo no se puede modificar</small>
+                                }
+                                else if (!isRequired)
+                                {
+                                    <small class="text-muted">Opcional</small>
+                                }
                             }
-                            else if (prop.PropertyType == typeof(decimal) || prop.PropertyType == typeof(double))
+                            else if (prop.PropertyType == typeof(decimal) || prop.PropertyType == typeof(double) ||
+                                     prop.PropertyType == typeof(decimal?) || prop.PropertyType == typeof(double?))
                             {
                                 <input type="number" step="0.01" class="form-control" id="@prop.Name" name="@prop.Name" 
                                        value="@currentValue" placeholder="Ingrese @prop.Name" 
-                                       @(isKey ? "readonly" : "") required />
+                                       @(shouldBeReadonly ? "readonly" : "") @(isRequired ? "required" : "") />
+                                @if (!isRequired && !shouldBeReadonly)
+                                {
+                                    <small class="text-muted">Opcional</small>
+                                }
                             }
                             else
                             {
                                 <input type="text" class="form-control" id="@prop.Name" name="@prop.Name" 
                                        value="@currentValue" placeholder="Ingrese @prop.Name" 
-                                       maxlength="@maxLength" @(isKey ? "readonly" : "") required />
+                                       maxlength="@maxLength" @(shouldBeReadonly ? "readonly" : "") @(isRequired ? "required" : "") />
+                                @if (!isRequired && !shouldBeReadonly)
+                                {
+                                    <small class="text-muted">Opcional</small>
+                                }
                             }
                             <span class="text-danger" data-valmsg-for="@prop.Name"></span>
+                        </div>
+                    }
+
+                    @if (isCluster)
+                    {
+                        <div class="alert alert-info" role="alert">
+                            <i class="bi bi-info-circle"></i> 
+                            <strong>Nota:</strong> El código del cluster no puede modificarse, pero puede cambiar la sucursal y el sector asignados.
                         </div>
                     }
 

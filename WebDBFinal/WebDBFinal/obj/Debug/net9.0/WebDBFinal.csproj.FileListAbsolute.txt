@@ -456,3 +456,6 @@ C:\Users\50246\Desktop\Residenciales\WebDBFinal\WebDBFinal\obj\Debug\net9.0\refi
 C:\Users\50246\Desktop\Residenciales\WebDBFinal\WebDBFinal\obj\Debug\net9.0\WebDBFinal.pdb
 C:\Users\50246\Desktop\Residenciales\WebDBFinal\WebDBFinal\obj\Debug\net9.0\WebDBFinal.genruntimeconfig.cache
 C:\Users\50246\Desktop\Residenciales\WebDBFinal\WebDBFinal\obj\Debug\net9.0\ref\WebDBFinal.dll
+C:\Users\luisl\OneDrive\Desktop\WebDB\WebDBFinal\WebDBFinal\obj\Debug\net9.0\WebDBFinal.sourcelink.json
+C:\Users\luisl\OneDrive\Desktop\WebDB\WebDBFinal\WebDBFinal\bin\Debug\net9.0\DotNetEnv.dll
+C:\Users\luisl\OneDrive\Desktop\WebDB\WebDBFinal\WebDBFinal\bin\Debug\net9.0\Sprache.dll

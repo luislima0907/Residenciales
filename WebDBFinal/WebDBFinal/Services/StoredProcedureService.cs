@@ -130,13 +130,13 @@ public class StoredProcedureService
     {
         var dataTable = new DataTable();
         
-        // Crear una nueva conexión independiente para ejecutar el procedimiento
-        var connectionString = _context.Database.GetConnectionString();
-        using var connection = new SqlConnection(connectionString);
+        // Usar la conexión administrada por el DbContext en lugar de crear una nueva con una connection string que puede ser null
+        var connection = _context.Database.GetDbConnection();
         
         try
         {
-            await connection.OpenAsync();
+            if (connection.State != ConnectionState.Open)
+                await connection.OpenAsync();
 
             using var command = connection.CreateCommand();
             command.CommandText = procedureName;
@@ -147,7 +147,11 @@ public class StoredProcedureService
             foreach (var param in parameters)
             {
                 var value = string.IsNullOrWhiteSpace(param.Value) ? DBNull.Value : (object)param.Value;
-                command.Parameters.Add(new SqlParameter($"@{param.Key}", value));
+                // Si la conexión es SqlConnection, usamos SqlParameter; de lo contrario creamos un DbParameter genérico
+                var dbParam = command.CreateParameter();
+                dbParam.ParameterName = $"@{param.Key}";
+                dbParam.Value = value;
+                command.Parameters.Add(dbParam);
             }
 
             using var reader = await command.ExecuteReaderAsync();

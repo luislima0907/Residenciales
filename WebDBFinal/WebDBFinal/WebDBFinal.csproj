@@ -8,6 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="DotNetEnv" Version="3.1.1" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.10">
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -17,6 +18,12 @@
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Views\Residencial\Create.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Residencial\Edit.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\Residencial\Index.cshtml" />
     </ItemGroup>
 
 </Project>

@@ -1,7 +1,8 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using WebDBFinal.Context;
 using WebDBFinal.Services;
+using DotNetEnv;
+
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,10 +10,36 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+Env.Load("ENV.env");
+
+string? serverName = Environment.GetEnvironmentVariable("SERVER_NAME");
+string? databaseName = Environment.GetEnvironmentVariable("DATABASE_NAME");
+string? password = Environment.GetEnvironmentVariable("PASSWORD_DB");
+
+// Construir la connection string a partir de variables de entorno si están presentes
+string? envConnectionString = null;
+if (!string.IsNullOrWhiteSpace(serverName) && !string.IsNullOrWhiteSpace(databaseName) && !string.IsNullOrWhiteSpace(password))
+{
+    // Agrego TrustServerCertificate para evitar problemas con certificados en entornos locales
+    envConnectionString = $"Server={serverName};Database={databaseName};User Id=sa;Password={password};TrustServerCertificate=True;";
+}
+
+// Preferir la cadena desde ENV, si no existe usar DefaultConnection del appsettings
+string? finalConnectionString = envConnectionString ?? builder.Configuration.GetConnectionString("DefaultConnection");
+
+if (string.IsNullOrWhiteSpace(finalConnectionString))
+{
+    throw new InvalidOperationException("No se encontró ninguna cadena de conexión. Configure ENV.env o DefaultConnection en appsettings.json.");
+}
+
 // Configurar DbContext
 builder.Services.AddDbContext<ResidencialesDbContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+    options.UseSqlServer(finalConnectionString!, sqlOptions =>
+    {
+        // Habilitar reintentos por si hay transitorios en la conexión
+        sqlOptions.EnableRetryOnFailure();
+    });
     options.EnableSensitiveDataLogging();
     options.EnableDetailedErrors();
 });

@@ -165,6 +165,7 @@ public abstract class BaseController<T> : Controller where T : class, new()
                         p.PropertyType == typeof(string) || 
                         p.PropertyType == typeof(decimal) || 
                         p.PropertyType == typeof(DateTime) ||
+                        p.PropertyType == typeof(DateOnly) ||
                         p.PropertyType == typeof(bool)))
             .Where(p => p.GetCustomAttribute<InversePropertyAttribute>() == null)
             .ToList();

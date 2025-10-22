@@ -9,7 +9,7 @@ namespace WebDBFinal.Controllers
         protected override string EntityName => "TipoTelefono";
         protected override string SpCreate => "EXEC InsertarTipoTelefono @p0, @p1";
         protected override string SpUpdate => "EXEC sp_ActualizarTipoTelefono @p0, @p1";
-        protected override string SpDelete => "EXEC EliminarTipoTelefono @p0";
+        protected override string SpDelete => "EXEC sp_EliminarTipoTelefono @p0";
         public TipoTelefonoController(ResidencialesDbContext context) : base(context, new ForeignKeyService(context)) { }
 
     }
