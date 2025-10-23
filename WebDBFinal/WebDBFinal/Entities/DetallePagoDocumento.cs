@@ -31,4 +31,7 @@ public partial class DetallePagoDocumento
     [ForeignKey("CodigoTipoPago")]
     [InverseProperty("DetallePagoDocumentos")]
     public virtual TipoPago CodigoTipoPagoNavigation { get; set; } = null!;
+
+    [InverseProperty("DetallePagoDocumentoNavigation")]
+    public virtual ICollection<DetalleEstadoCuentum> DetalleEstadoCuenta { get; set; } = new List<DetalleEstadoCuentum>();
 }

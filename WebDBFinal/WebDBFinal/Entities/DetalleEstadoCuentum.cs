@@ -7,36 +7,30 @@ using Microsoft.EntityFrameworkCore;
 namespace WebDBFinal.Entities;
 
 [PrimaryKey("CodigoDetalleEstadoCuenta", "NumeroEstadoCuenta")]
+[Table("DetalleEstadoCuenta")]
 public partial class DetalleEstadoCuentum
 {
-    [Key]
-    public int CodigoDetalleEstadoCuenta { get; set; }
+  [Key]
+  public int CodigoDetalleEstadoCuenta { get; set; }
 
-    [Key]
-    public int NumeroEstadoCuenta { get; set; }
+  [Key]
+  public int NumeroEstadoCuenta { get; set; }
 
-    public int CodigoCargoMensual { get; set; }
+  public int AnioCargo { get; set; }
 
-    public byte MesCargo { get; set; }
+  public byte MesCargo { get; set; }
 
-    public int AnioCargo { get; set; }
+  public DateOnly FechaSugeridaPago { get; set; }
 
-    public DateOnly FechaSugeridaPago { get; set; }
+  public int CodigoDetallePagoDocumento { get; set; }
 
-    public byte CodigoTipoPago { get; set; }
+  public int CodigoAplicacionDocumento { get; set; }
 
-    [Column(TypeName = "money")]
-    public decimal ValorPendiente { get; set; }
+  [ForeignKey("NumeroEstadoCuenta")]
+  [InverseProperty("DetalleEstadoCuenta")]
+  public virtual EstadoCuentum NumeroEstadoCuentaNavigation { get; set; } = null!;
 
-    [ForeignKey("CodigoCargoMensual")]
-    [InverseProperty("DetalleEstadoCuenta")]
-    public virtual CargoMensualCasa CodigoCargoMensualNavigation { get; set; } = null!;
-
-    [ForeignKey("CodigoTipoPago")]
-    [InverseProperty("DetalleEstadoCuenta")]
-    public virtual TipoPago CodigoTipoPagoNavigation { get; set; } = null!;
-
-    [ForeignKey("NumeroEstadoCuenta")]
-    [InverseProperty("DetalleEstadoCuenta")]
-    public virtual EstadoCuentum NumeroEstadoCuentaNavigation { get; set; } = null!;
+  [ForeignKey("CodigoDetallePagoDocumento, CodigoAplicacionDocumento")]
+  [InverseProperty("DetalleEstadoCuenta")]
+  public virtual DetallePagoDocumento DetallePagoDocumentoNavigation { get; set; } = null!;
 }

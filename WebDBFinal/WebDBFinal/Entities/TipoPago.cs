@@ -17,8 +17,5 @@ public partial class TipoPago
     public string Descripcion { get; set; } = null!;
 
     [InverseProperty("CodigoTipoPagoNavigation")]
-    public virtual ICollection<DetalleEstadoCuentum> DetalleEstadoCuenta { get; set; } = new List<DetalleEstadoCuentum>();
-
-    [InverseProperty("CodigoTipoPagoNavigation")]
     public virtual ICollection<DetallePagoDocumento> DetallePagoDocumentos { get; set; } = new List<DetallePagoDocumento>();
 }

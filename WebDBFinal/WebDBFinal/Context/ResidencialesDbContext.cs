@@ -238,13 +238,10 @@ public partial class ResidencialesDbContext : DbContext
 
         modelBuilder.Entity<DetalleEstadoCuentum>(entity =>
         {
-            entity.HasOne(d => d.CodigoCargoMensualNavigation).WithMany(p => p.DetalleEstadoCuenta)
+            entity.HasOne(d => d.DetallePagoDocumentoNavigation).WithMany(p => p.DetalleEstadoCuenta)
+                .HasForeignKey(d => new { d.CodigoDetallePagoDocumento, d.CodigoAplicacionDocumento })
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_DetalleEstadoCuenta_CargoMensual");
-
-            entity.HasOne(d => d.CodigoTipoPagoNavigation).WithMany(p => p.DetalleEstadoCuenta)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_DetalleEstadoCuenta_TipoPago");
+                .HasConstraintName("FK_DetalleEstadoCuenta_DetallePago");
 
             entity.HasOne(d => d.NumeroEstadoCuentaNavigation).WithMany(p => p.DetalleEstadoCuenta)
                 .OnDelete(DeleteBehavior.ClientSetNull)

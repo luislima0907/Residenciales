@@ -40,7 +40,4 @@ public partial class CargoMensualCasa
 
     [InverseProperty("CodigoCargoMensualNavigation")]
     public virtual ICollection<DetalleCargoMensual> DetalleCargoMensuals { get; set; } = new List<DetalleCargoMensual>();
-
-    [InverseProperty("CodigoCargoMensualNavigation")]
-    public virtual ICollection<DetalleEstadoCuentum> DetalleEstadoCuenta { get; set; } = new List<DetalleEstadoCuentum>();
 }
