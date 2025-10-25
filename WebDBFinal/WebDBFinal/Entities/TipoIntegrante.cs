@@ -17,5 +17,5 @@ public partial class TipoIntegrante
     public string Descripcion { get; set; } = null!;
 
     [InverseProperty("CodigoTipoIntegranteNavigation")]
-    public virtual ICollection<IntegranteJuntum> IntegranteJunta { get; set; } = new List<IntegranteJuntum>();
+    public virtual ICollection<IntegranteJunta> IntegranteJunta { get; set; } = new List<IntegranteJunta>();
 }

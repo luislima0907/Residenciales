@@ -19,5 +19,5 @@ public partial class TipoMultum
     public decimal ValorMulta { get; set; }
 
     [InverseProperty("CodigoTipoMultaNavigation")]
-    public virtual ICollection<Multum> Multa { get; set; } = new List<Multum>();
+    public virtual ICollection<Multa> Multa { get; set; } = new List<Multa>();
 }

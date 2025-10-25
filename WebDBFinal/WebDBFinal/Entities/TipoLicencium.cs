@@ -20,5 +20,5 @@ public partial class TipoLicencium
     public string Descripcion { get; set; } = null!;
 
     [InverseProperty("CodigoTipoLicenciaNavigation")]
-    public virtual ICollection<Licencium> Licencia { get; set; } = new List<Licencium>();
+    public virtual ICollection<Licencia> Licencia { get; set; } = new List<Licencia>();
 }

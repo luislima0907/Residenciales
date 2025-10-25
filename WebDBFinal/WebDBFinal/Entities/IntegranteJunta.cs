@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace WebDBFinal.Entities;
 
 [Index("CodigoJunta", "CodigoCluster", "CodigoSucursal", "CodigoSector", "CodigoTipoIntegrante", Name = "UK_IntegranteJunta_JuntaTipo", IsUnique = true)]
-public partial class IntegranteJuntum
+public partial class IntegranteJunta
 {
     [Key]
     public int CodigoIntegranteJunta { get; set; }

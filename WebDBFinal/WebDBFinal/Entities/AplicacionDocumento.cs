@@ -36,7 +36,7 @@ public partial class AplicacionDocumento
 
     [ForeignKey("CodigoMulta")]
     [InverseProperty("AplicacionDocumentos")]
-    public virtual Multum? CodigoMultaNavigation { get; set; }
+    public virtual Multa? CodigoMultaNavigation { get; set; }
 
     [ForeignKey("CodigoDetalleCargoMensual, CodigoCargoMensual, CodigoTipoConcepto")]
     [InverseProperty("AplicacionDocumentos")]

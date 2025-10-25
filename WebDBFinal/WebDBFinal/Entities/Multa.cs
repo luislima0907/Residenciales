@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace WebDBFinal.Entities;
 
-public partial class Multum
+public partial class Multa
 {
     [Key]
     public int CodigoMulta { get; set; }

@@ -35,5 +35,5 @@ public partial class JuntaDirectiva
     public virtual Cluster Cluster { get; set; } = null!;
 
     [InverseProperty("JuntaDirectiva")]
-    public virtual ICollection<IntegranteJuntum> IntegranteJunta { get; set; } = new List<IntegranteJuntum>();
+    public virtual ICollection<IntegranteJunta> IntegranteJunta { get; set; } = new List<IntegranteJunta>();
 }

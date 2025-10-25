@@ -40,7 +40,7 @@ public partial class Casa
     public virtual ICollection<EstadoCuentum> EstadoCuenta { get; set; } = new List<EstadoCuentum>();
 
     [InverseProperty("Casa")]
-    public virtual ICollection<Multum> Multa { get; set; } = new List<Multum>();
+    public virtual ICollection<Multa> Multa { get; set; } = new List<Multa>();
 
     [InverseProperty("Casa")]
     public virtual ICollection<PersonaRol> PersonaRols { get; set; } = new List<PersonaRol>();

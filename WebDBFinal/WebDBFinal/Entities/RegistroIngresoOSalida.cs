@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace WebDBFinal.Entities;
 
-public partial class RegistroIngresoOSalidum
+public partial class RegistroIngresoOSalida
 {
     [Key]
     public int CodigoEntradaOSalida { get; set; }

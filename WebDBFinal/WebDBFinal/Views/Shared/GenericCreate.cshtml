@@ -128,9 +128,18 @@
                                     </label>
                                 </div>
                             }
-                            else if (prop.PropertyType == typeof(DateTime) || prop.PropertyType == typeof(DateTime?) || 
-                                     prop.PropertyType == typeof(DateOnly) || prop.PropertyType == typeof(DateOnly?))
+                            else if (prop.PropertyType == typeof(DateTime) || prop.PropertyType == typeof(DateTime?))
                             {
+                                // Para DateTime usar datetime-local que incluye hora
+                                <input type="datetime-local" class="form-control" id="@prop.Name" name="@prop.Name" @(isRequired ? "required" : "") />
+                                @if (!isRequired)
+                                {
+                                    <small class="text-muted">Opcional</small>
+                                }
+                            }
+                            else if (prop.PropertyType == typeof(DateOnly) || prop.PropertyType == typeof(DateOnly?))
+                            {
+                                // Para DateOnly usar date que solo maneja fecha
                                 <input type="date" class="form-control" id="@prop.Name" name="@prop.Name" @(isRequired ? "required" : "") />
                                 @if (!isRequired)
                                 {

@@ -76,17 +76,50 @@ public class StoredProcedureService
     // Obtener parámetros de un procedimiento almacenado
     private async Task<List<ProcedureParameter>> GetProcedureParametersAsync(int procedureId)
     {
-        var parameters = new List<ProcedureParameter>();
+        var parameterInfo = await GetProcedureParameterInfoAsync(procedureId: procedureId);
         
-        var query = @"
-            SELECT 
-                p.name as ParameterName,
-                TYPE_NAME(p.user_type_id) as DataType,
-                p.is_output as IsOutput
-            FROM sys.parameters p
-            WHERE p.object_id = @ProcedureId
-            AND p.name != ''
-            ORDER BY p.parameter_id";
+        return parameterInfo
+            .Where(p => !p.Value.IsOutput)
+            .Select(p => new ProcedureParameter
+            {
+                Name = p.Key,
+                Type = MapSqlTypeToCSharpType(p.Value.DataType),
+                IsRequired = true
+            })
+            .ToList();
+    }
+
+    // Método unificado que obtiene información de parámetros (por ID o nombre)
+    private async Task<Dictionary<string, (string DataType, bool IsOutput)>> GetProcedureParameterInfoAsync(int? procedureId = null, string procedureName = null)
+    {
+        var parameterInfo = new Dictionary<string, (string DataType, bool IsOutput)>();
+        
+        string query;
+        if (procedureId.HasValue)
+        {
+            query = @"
+                SELECT 
+                    p.name as ParameterName,
+                    TYPE_NAME(p.user_type_id) as DataType,
+                    p.is_output as IsOutput
+                FROM sys.parameters p
+                WHERE p.object_id = @ProcedureId
+                AND p.name != ''
+                ORDER BY p.parameter_id";
+        }
+        else
+        {
+            query = @"
+                SELECT 
+                    p.name as ParameterName,
+                    TYPE_NAME(p.user_type_id) as DataType,
+                    p.is_output as IsOutput
+                FROM sys.parameters p
+                INNER JOIN sys.procedures pr ON p.object_id = pr.object_id
+                WHERE pr.name = @ProcedureName
+                AND p.name != ''
+                ORDER BY p.parameter_id";
+        }
 
         var connection = _context.Database.GetDbConnection();
         
@@ -97,7 +130,18 @@ public class StoredProcedureService
 
             using var command = connection.CreateCommand();
             command.CommandText = query;
-            command.Parameters.Add(new SqlParameter("@ProcedureId", procedureId));
+            
+            if (procedureId.HasValue)
+            {
+                command.Parameters.Add(new SqlParameter("@ProcedureId", procedureId.Value));
+            }
+            else
+            {
+                var sqlParam = command.CreateParameter();
+                sqlParam.ParameterName = "@ProcedureName";
+                sqlParam.Value = procedureName;
+                command.Parameters.Add(sqlParam);
+            }
             
             using var reader = await command.ExecuteReaderAsync();
             while (await reader.ReadAsync())
@@ -105,16 +149,8 @@ public class StoredProcedureService
                 var paramName = reader.GetString(0).TrimStart('@');
                 var dataType = reader.GetString(1);
                 var isOutput = reader.GetBoolean(2);
-
-                if (!isOutput) // Solo parámetros de entrada
-                {
-                    parameters.Add(new ProcedureParameter
-                    {
-                        Name = paramName,
-                        Type = MapSqlTypeToCSharpType(dataType),
-                        IsRequired = true
-                    });
-                }
+                
+                parameterInfo[paramName] = (dataType, isOutput);
             }
         }
         finally
@@ -122,7 +158,7 @@ public class StoredProcedureService
             // No cerramos la conexión aquí porque la gestiona el contexto
         }
 
-        return parameters;
+        return parameterInfo;
     }
 
     // Ejecutar un procedimiento almacenado y obtener resultados
@@ -183,46 +219,11 @@ public class StoredProcedureService
     // Obtener los tipos de parámetros de un procedimiento almacenado
     private async Task<Dictionary<string, string>> GetProcedureParameterTypesAsync(string procedureName)
     {
-        var parameterTypes = new Dictionary<string, string>();
+        var parameterInfo = await GetProcedureParameterInfoAsync(procedureName: procedureName);
         
-        var query = @"
-            SELECT 
-                p.name as ParameterName,
-                TYPE_NAME(p.user_type_id) as DataType
-            FROM sys.parameters p
-            INNER JOIN sys.procedures pr ON p.object_id = pr.object_id
-            WHERE pr.name = @ProcedureName
-            AND p.name != ''
-            ORDER BY p.parameter_id";
-
-        var connection = _context.Database.GetDbConnection();
-        
-        try
-        {
-            if (connection.State != ConnectionState.Open)
-                await connection.OpenAsync();
-
-            using var command = connection.CreateCommand();
-            command.CommandText = query;
-            var sqlParam = command.CreateParameter();
-            sqlParam.ParameterName = "@ProcedureName";
-            sqlParam.Value = procedureName;
-            command.Parameters.Add(sqlParam);
-            
-            using var reader = await command.ExecuteReaderAsync();
-            while (await reader.ReadAsync())
-            {
-                var paramName = reader.GetString(0).TrimStart('@');
-                var dataType = reader.GetString(1);
-                parameterTypes[paramName] = dataType;
-            }
-        }
-        finally
-        {
-            // No cerramos la conexión aquí porque la gestiona el contexto
-        }
-
-        return parameterTypes;
+        return parameterInfo
+            .Where(p => !p.Value.IsOutput)
+            .ToDictionary(p => p.Key, p => p.Value.DataType);
     }
 
     // Convertir un valor de string al tipo apropiado según el tipo SQL
@@ -301,7 +302,7 @@ public class StoredProcedureService
         return procedureName.Replace("sp_", "").Replace("_", " ");
     }
 
-    // Mapeo de descripciones según el archivo Proceduras.txt
+    // Mapeo de descripciones
     private string GetDescriptionByNumber(int number)
     {
         var descriptions = new Dictionary<int, string>

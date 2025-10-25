@@ -98,7 +98,19 @@
                                                 }
                                                 else if (value is DateTime dateValue)
                                                 {
-                                                    @dateValue.ToString("dd/MM/yyyy")
+                                                    // Si el valor tiene hora (no es medianoche), mostrar fecha y hora
+                                                    if (dateValue.TimeOfDay != TimeSpan.Zero)
+                                                    {
+                                                        @dateValue.ToString("dd/MM/yyyy HH:mm")
+                                                    }
+                                                    else
+                                                    {
+                                                        @dateValue.ToString("dd/MM/yyyy")
+                                                    }
+                                                }
+                                                else if (value is DateOnly dateOnlyValue)
+                                                {
+                                                    @dateOnlyValue.ToString("dd/MM/yyyy")
                                                 }
                                                 else if (prop.Name == "LineaVehiculo" && value != null)
                                                 {

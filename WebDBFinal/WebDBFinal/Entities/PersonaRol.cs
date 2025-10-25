@@ -52,7 +52,7 @@ public partial class PersonaRol
     public virtual ICollection<EstadoCuentum> EstadoCuenta { get; set; } = new List<EstadoCuentum>();
 
     [InverseProperty("PersonaRol")]
-    public virtual ICollection<IntegranteJuntum> IntegranteJunta { get; set; } = new List<IntegranteJuntum>();
+    public virtual ICollection<IntegranteJunta> IntegranteJunta { get; set; } = new List<IntegranteJunta>();
 
     [InverseProperty("PersonaRol")]
     public virtual ICollection<MarcajeLaboral> MarcajeLaborals { get; set; } = new List<MarcajeLaboral>();
@@ -61,7 +61,7 @@ public partial class PersonaRol
     public virtual ICollection<RegistroMovimientoResidencial> RegistroMovimientoResidencials { get; set; } = new List<RegistroMovimientoResidencial>();
 
     [InverseProperty("PersonaRol")]
-    public virtual ICollection<RegistroPersonaNoGratum> RegistroPersonaNoGrata { get; set; } = new List<RegistroPersonaNoGratum>();
+    public virtual ICollection<RegistroPersonaNoGrata> RegistroPersonaNoGrata { get; set; } = new List<RegistroPersonaNoGrata>();
 
     [InverseProperty("PersonaRol")]
     public virtual ICollection<RegistroVehiculoResidente> RegistroVehiculoResidentes { get; set; } = new List<RegistroVehiculoResidente>();

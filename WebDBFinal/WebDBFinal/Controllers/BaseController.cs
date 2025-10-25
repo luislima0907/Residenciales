@@ -149,10 +149,29 @@ public abstract class BaseController<T> : Controller where T : class, new()
     protected List<PropertyInfo> GetDisplayProperties()
     {
         return typeof(T).GetProperties()
-            .Where(p => p.GetCustomAttribute<KeyAttribute>() != null || 
-                       (!p.PropertyType.IsGenericType && 
-                        !p.PropertyType.IsClass || 
-                        p.PropertyType == typeof(string)))
+            .Where(p => {
+                var type = p.PropertyType;
+                var underlyingType = Nullable.GetUnderlyingType(type);
+                
+                // Si tiene KeyAttribute, siempre incluirlo
+                if (p.GetCustomAttribute<KeyAttribute>() != null)
+                    return true;
+                
+                // Si es nullable, obtener el tipo subyacente
+                if (underlyingType != null)
+                {
+                    type = underlyingType;
+                }
+                
+                // Incluir tipos primitivos, string, decimal, DateTime, DateOnly, bool
+                return type.IsPrimitive || 
+                       type == typeof(string) || 
+                       type == typeof(decimal) || 
+                       type == typeof(DateTime) ||
+                       type == typeof(DateOnly) ||
+                       type == typeof(bool) ||
+                       underlyingType != null; // Incluir cualquier tipo nullable
+            })
             .Where(p => p.GetCustomAttribute<InversePropertyAttribute>() == null)
             .ToList();
     }

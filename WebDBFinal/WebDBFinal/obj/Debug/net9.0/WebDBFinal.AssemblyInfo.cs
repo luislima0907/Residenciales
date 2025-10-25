@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WebDBFinal")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+87245096c5ca54dba49ff17f2cb5678f1c42b546")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ec76df07aa2074916d29f8120c4b5345dd007f31")]
 [assembly: System.Reflection.AssemblyProductAttribute("WebDBFinal")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WebDBFinal")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

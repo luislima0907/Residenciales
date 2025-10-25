@@ -1,0 +1,349 @@
+-- Consultas para tabla AplicacionDocumento
+SELECT * FROM AplicacionDocumento WHERE CodigoAplicacionDocumento = 1;
+SELECT * FROM AplicacionDocumento WHERE CodigoTipoDocumento = 1;
+SELECT * FROM AplicacionDocumento WHERE Serie = 'A';
+SELECT * FROM AplicacionDocumento WHERE Numero = 1001;
+SELECT * FROM AplicacionDocumento WHERE MontoTotal > 100;
+
+-- Consultas para tabla CargoMensualCasa
+SELECT * FROM CargoMensualCasa WHERE CodigoCargoMensual = 1;
+SELECT * FROM CargoMensualCasa WHERE NumeroCasa = 15;
+SELECT * FROM CargoMensualCasa WHERE CodigoCluster = 1;
+SELECT * FROM CargoMensualCasa WHERE MesCargo = 1;
+SELECT * FROM CargoMensualCasa WHERE Pagado = 1;
+
+-- Consultas para tabla Casa
+SELECT * FROM Casa WHERE NumeroCasa = 1 AND CodigoCluster = 1 AND CodigoSucursal = 1 AND CodigoSector = 1;
+SELECT * FROM Casa WHERE NumeroCasa = 15;
+SELECT * FROM Casa WHERE CodigoCluster = 1;
+SELECT * FROM Casa WHERE EsAlquilada = 1;
+SELECT * FROM Casa WHERE EsOcupada = 0;
+
+-- Consultas para tabla Censo
+SELECT * FROM Censo WHERE CodigoCenso = 1;
+SELECT * FROM Censo WHERE FechaInicio = '2024-01-01';
+SELECT * FROM Censo WHERE FechaFin = '2024-01-31';
+SELECT * FROM Censo WHERE Anio = 2024;
+SELECT * FROM Censo WHERE FechaInicio > '2024-01-01';
+
+-- Consultas para tabla Cluster
+SELECT * FROM Cluster WHERE CodigoCluster = 1 AND CodigoSucursal = 1 AND CodigoSector = 1;
+SELECT * FROM Cluster WHERE CodigoCluster = 1;
+SELECT * FROM Cluster WHERE CodigoSucursal = 1;
+SELECT * FROM Cluster WHERE CodigoSector = 1;
+SELECT * FROM Cluster WHERE CodigoSucursal = 1 AND CodigoSector = 1;
+
+-- Consultas para tabla ControlGaritaSeguridad
+SELECT * FROM ControlGaritaSeguridad WHERE CodigoControl = 1;
+SELECT * FROM ControlGaritaSeguridad WHERE CodigoPersonaRol = 20;
+SELECT * FROM ControlGaritaSeguridad WHERE CodigoPersona = 4;
+SELECT * FROM ControlGaritaSeguridad WHERE CodigoMarcaje = 1;
+SELECT * FROM ControlGaritaSeguridad WHERE Observaciones LIKE '%matutino%';
+
+-- Consultas para tabla Departamento
+SELECT * FROM Departamento WHERE CodigoDepartamento = 1;
+SELECT * FROM Departamento WHERE CodigoDepartamento = 2;
+SELECT * FROM Departamento WHERE Descripcion = 'Guatemala';
+SELECT * FROM Departamento WHERE Descripcion = 'Sacatepequez';
+SELECT * FROM Departamento WHERE Descripcion LIKE '%tequez%';
+
+-- Consultas para tabla DetalleCargoMensual
+SELECT * FROM DetalleCargoMensual WHERE CodigoDetalleCargoMensual = 1 AND CodigoCargoMensual = 1 AND CodigoTipoConcepto = 1;
+SELECT * FROM DetalleCargoMensual WHERE CodigoDetalleCargoMensual = 1;
+SELECT * FROM DetalleCargoMensual WHERE CodigoCargoMensual = 1;
+SELECT * FROM DetalleCargoMensual WHERE CodigoTipoConcepto = 1;
+SELECT * FROM DetalleCargoMensual WHERE ValorTotal > 100;
+
+-- Consultas para tabla DetalleCenso
+SELECT * FROM DetalleCenso WHERE CodigoDetalleCenso = 1 AND CodigoCenso = 1;
+SELECT * FROM DetalleCenso WHERE CodigoDetalleCenso = 1;
+SELECT * FROM DetalleCenso WHERE CodigoCenso = 1;
+SELECT * FROM DetalleCenso WHERE NumeroCasa = 15;
+SELECT * FROM DetalleCenso WHERE CodigoPersonaRol = 1;
+
+-- Consultas para tabla DetalleEstadoCuenta
+SELECT * FROM DetalleEstadoCuenta WHERE CodigoDetalleEstadoCuenta = 1 AND NumeroEstadoCuenta = 1;
+SELECT * FROM DetalleEstadoCuenta WHERE CodigoDetalleEstadoCuenta = 1;
+SELECT * FROM DetalleEstadoCuenta WHERE NumeroEstadoCuenta = 1;
+SELECT * FROM DetalleEstadoCuenta WHERE AnioCargo = 2024;
+SELECT * FROM DetalleEstadoCuenta WHERE MesCargo = 1;
+
+-- Consultas para tabla DetalleFacturacionSeguridad
+SELECT * FROM DetalleFacturacionSeguridad WHERE CodigoDetalleFacturacion = 1 AND CodigoPeriodoFacturacion = 1;
+SELECT * FROM DetalleFacturacionSeguridad WHERE CodigoDetalleFacturacion = 1;
+SELECT * FROM DetalleFacturacionSeguridad WHERE CodigoPeriodoFacturacion = 1;
+SELECT * FROM DetalleFacturacionSeguridad WHERE TotalHorasTrabajadas > 8;
+SELECT * FROM DetalleFacturacionSeguridad WHERE MontoAPagar > 100;
+
+-- Consultas para tabla DetallePagoDocumento
+SELECT * FROM DetallePagoDocumento WHERE CodigoDetallePagoDocumento = 1 AND CodigoAplicacionDocumento = 1;
+SELECT * FROM DetallePagoDocumento WHERE CodigoDetallePagoDocumento = 1;
+SELECT * FROM DetallePagoDocumento WHERE CodigoAplicacionDocumento = 1;
+SELECT * FROM DetallePagoDocumento WHERE CodigoTipoPago = 3;
+SELECT * FROM DetallePagoDocumento WHERE MontoPagado > 100;
+
+-- Consultas para tabla DireccionSucursal
+SELECT * FROM DireccionSucursal WHERE CodigoDireccionSucursal = 1 AND CodigoSucursal = 1;
+SELECT * FROM DireccionSucursal WHERE CodigoDireccionSucursal = 1;
+SELECT * FROM DireccionSucursal WHERE CodigoSucursal = 1;
+SELECT * FROM DireccionSucursal WHERE Ciudad = 'Mixco';
+SELECT * FROM DireccionSucursal WHERE Zona = 8;
+
+-- Consultas para tabla DocumentoFiscal
+SELECT * FROM DocumentoFiscal WHERE CodigoTipoDocumento = 1 AND Serie = 'A' AND Numero = 1001;
+SELECT * FROM DocumentoFiscal WHERE CodigoTipoDocumento = 1;
+SELECT * FROM DocumentoFiscal WHERE Serie = 'A';
+SELECT * FROM DocumentoFiscal WHERE Numero = 1001;
+SELECT * FROM DocumentoFiscal WHERE NIT = '2854679841501';
+
+-- Consultas para tabla EmpresaSeguridad
+SELECT * FROM EmpresaSeguridad WHERE CodigoEmpresa = 1;
+SELECT * FROM EmpresaSeguridad WHERE CodigoEmpresa = 1;
+SELECT * FROM EmpresaSeguridad WHERE RazonSocial LIKE '%Seguridad%';
+SELECT * FROM EmpresaSeguridad WHERE NIT = '12345678-9';
+SELECT * FROM EmpresaSeguridad WHERE ContactoPrincipal = 'Carlos Martinez';
+
+-- Consultas para tabla EstadoCivil
+SELECT * FROM EstadoCivil WHERE CodigoEstadoCivil = 1;
+SELECT * FROM EstadoCivil WHERE CodigoEstadoCivil = 2;
+SELECT * FROM EstadoCivil WHERE Descripcion = 'Casado(a)';
+SELECT * FROM EstadoCivil WHERE Descripcion = 'Soltero(a)';
+SELECT * FROM EstadoCivil WHERE Descripcion LIKE '%Soltero%';
+
+-- Consultas para tabla EstadoCuenta
+SELECT * FROM EstadoCuenta WHERE NumeroEstadoCuenta = 1;
+SELECT * FROM EstadoCuenta WHERE NumeroEstadoCuenta = 2;
+SELECT * FROM EstadoCuenta WHERE CodigoPersonaRol = 1;
+SELECT * FROM EstadoCuenta WHERE TotalVencido > 0;
+SELECT * FROM EstadoCuenta WHERE MesesVencidos > 0;
+
+-- Consultas para tabla GaritaSeguridad
+SELECT * FROM GaritaSeguridad WHERE CodigoGaritaSeguridad = 1;
+SELECT * FROM GaritaSeguridad WHERE CodigoGaritaSeguridad = 2;
+SELECT * FROM GaritaSeguridad WHERE CodigoTipoGarita = 1;
+SELECT * FROM GaritaSeguridad WHERE CodigoCluster = 1;
+SELECT * FROM GaritaSeguridad WHERE CodigoSector = 1;
+
+-- Consultas para tabla IntegranteJunta
+SELECT * FROM IntegranteJunta WHERE CodigoIntegranteJunta = 1;
+SELECT * FROM IntegranteJunta WHERE CodigoIntegranteJunta = 2;
+SELECT * FROM IntegranteJunta WHERE CodigoJunta = 1;
+SELECT * FROM IntegranteJunta WHERE CodigoTipoIntegrante = 1;
+SELECT * FROM IntegranteJunta WHERE CodigoPersona = 22;
+
+-- Consultas para tabla JuntaDirectiva
+SELECT * FROM JuntaDirectiva WHERE CodigoJunta = 1 AND CodigoCluster = 5 AND CodigoSucursal = 1 AND CodigoSector = 5;
+SELECT * FROM JuntaDirectiva WHERE CodigoJunta = 1;
+SELECT * FROM JuntaDirectiva WHERE CodigoCluster = 5;
+SELECT * FROM JuntaDirectiva WHERE FechaInicio = '2022-01-01';
+SELECT * FROM JuntaDirectiva WHERE Descripcion LIKE '%2022%';
+
+-- Consultas para tabla Licencia
+SELECT * FROM Licencia WHERE CodigoLicencia = 1;
+SELECT * FROM Licencia WHERE CodigoLicencia = 2;
+SELECT * FROM Licencia WHERE CodigoPersona = 1;
+SELECT * FROM Licencia WHERE NumeroLicencia = 'LIC-001-2020';
+SELECT * FROM Licencia WHERE FechaVencimiento > '2024-01-01';
+
+-- Consultas para tabla LineaVehiculo
+SELECT * FROM LineaVehiculo WHERE CodigoLinea = 1 AND CodigoMarca = 1;
+SELECT * FROM LineaVehiculo WHERE CodigoLinea = 1;
+SELECT * FROM LineaVehiculo WHERE CodigoMarca = 1;
+SELECT * FROM LineaVehiculo WHERE Descripcion = 'Corolla';
+SELECT * FROM LineaVehiculo WHERE Descripcion LIKE '%Civic%';
+
+-- Consultas para tabla MarcajeLaboral
+SELECT * FROM MarcajeLaboral WHERE CodigoMarcaje = 1;
+SELECT * FROM MarcajeLaboral WHERE CodigoMarcaje = 2;
+SELECT * FROM MarcajeLaboral WHERE CodigoPersonaRol = 20;
+SELECT * FROM MarcajeLaboral WHERE CodigoGaritaSeguridad = 1;
+SELECT * FROM MarcajeLaboral WHERE CodigoTipoMarcaje = 1;
+
+-- Consultas para tabla MarcaVehiculo
+SELECT * FROM MarcaVehiculo WHERE CodigoMarca = 1;
+SELECT * FROM MarcaVehiculo WHERE CodigoMarca = 2;
+SELECT * FROM MarcaVehiculo WHERE Descripcion = 'Toyota';
+SELECT * FROM MarcaVehiculo WHERE Descripcion = 'Honda';
+SELECT * FROM MarcaVehiculo WHERE Descripcion LIKE '%Honda%';
+
+-- Consultas para tabla Multa
+SELECT * FROM Multa WHERE CodigoMulta = 1;
+SELECT * FROM Multa WHERE CodigoMulta = 2;
+SELECT * FROM Multa WHERE CodigoTipoMulta = 1;
+SELECT * FROM Multa WHERE NumeroCasa = 15;
+SELECT * FROM Multa WHERE Pagada = 0;
+
+-- Consultas para tabla Municipio
+SELECT * FROM Municipio WHERE CodigoMunicipio = 1 AND CodigoDepartamento = 1;
+SELECT * FROM Municipio WHERE CodigoMunicipio = 1;
+SELECT * FROM Municipio WHERE CodigoDepartamento = 1;
+SELECT * FROM Municipio WHERE Descripcion = 'Guatemala';
+SELECT * FROM Municipio WHERE Descripcion = 'Mixco';
+
+-- Consultas para tabla PeriodoFacturacionSeguridad
+SELECT * FROM PeriodoFacturacionSeguridad WHERE CodigoPeriodoFacturacion = 1;
+SELECT * FROM PeriodoFacturacionSeguridad WHERE CodigoPeriodoFacturacion = 2;
+SELECT * FROM PeriodoFacturacionSeguridad WHERE CodigoSucursal = 2;
+SELECT * FROM PeriodoFacturacionSeguridad WHERE FechaInicio = '2024-01-01';
+SELECT * FROM PeriodoFacturacionSeguridad WHERE FechaInicio > '2024-01-01';
+
+-- Consultas para tabla Persona
+SELECT * FROM Persona WHERE CodigoPersona = 1;
+SELECT * FROM Persona WHERE CodigoPersona = 2;
+SELECT * FROM Persona WHERE CUI = '2854679841501';
+SELECT * FROM Persona WHERE PrimerNombre = 'Juan';
+SELECT * FROM Persona WHERE Genero = 'M';
+
+-- Consultas para tabla PersonaRol
+SELECT * FROM PersonaRol WHERE CodigoPersonaRol = 1 AND CodigoPersona = 1 AND CodigoTipoRol = 1;
+SELECT * FROM PersonaRol WHERE CodigoPersonaRol = 1;
+SELECT * FROM PersonaRol WHERE CodigoPersona = 1;
+SELECT * FROM PersonaRol WHERE CodigoTipoRol = 1;
+SELECT * FROM PersonaRol WHERE NumeroCasa = 15;
+
+-- Consultas para tabla PersonaTelefono
+SELECT * FROM PersonaTelefono WHERE CodigoPersonaTelefono = 1;
+SELECT * FROM PersonaTelefono WHERE CodigoPersonaTelefono = 2;
+SELECT * FROM PersonaTelefono WHERE CodigoPersona = 1;
+SELECT * FROM PersonaTelefono WHERE CodigoTipoTelefono = 1;
+SELECT * FROM PersonaTelefono WHERE Numero = '5566-7788';
+
+-- Consultas para tabla RegistroIngresoOSalida
+SELECT * FROM RegistroIngresoOSalida WHERE CodigoEntradaOSalida = 3;
+SELECT * FROM RegistroIngresoOSalida WHERE CodigoEntradaOSalida = 4;
+SELECT * FROM RegistroIngresoOSalida WHERE CodigoMovimientoResidencial = 2;
+SELECT * FROM RegistroIngresoOSalida WHERE TipoMovimiento = 'I';
+SELECT * FROM RegistroIngresoOSalida WHERE FechaHora > '2024-01-15';
+
+-- Consultas para tabla RegistroMovimientoResidencial
+SELECT * FROM RegistroMovimientoResidencial WHERE CodigoMovimientoResidencial = 1;
+SELECT * FROM RegistroMovimientoResidencial WHERE CodigoMovimientoResidencial = 2;
+SELECT * FROM RegistroMovimientoResidencial WHERE CodigoGaritaSeguridad = 1;
+SELECT * FROM RegistroMovimientoResidencial WHERE CodigoPersonaRol = 25;
+SELECT * FROM RegistroMovimientoResidencial WHERE MotivoVisita LIKE '%familiar%';
+
+-- Consultas para tabla RegistroPersonaNoGrata
+SELECT * FROM RegistroPersonaNoGrata WHERE CodigoRegistroPersonaNoGrata = 1;
+SELECT * FROM RegistroPersonaNoGrata WHERE CodigoRegistroPersonaNoGrata = 2;
+SELECT * FROM RegistroPersonaNoGrata WHERE CodigoPersonaRol = 24;
+SELECT * FROM RegistroPersonaNoGrata WHERE CodigoPersona = 5;
+SELECT * FROM RegistroPersonaNoGrata WHERE Estado = 1;
+
+-- Consultas para tabla RegistroVehiculoNoPermitido
+SELECT * FROM RegistroVehiculoNoPermitido WHERE CodigoVehiculoNoPermitido = 1;
+SELECT * FROM RegistroVehiculoNoPermitido WHERE CodigoVehiculoNoPermitido = 2;
+SELECT * FROM RegistroVehiculoNoPermitido WHERE CodigoVehiculo = 18;
+SELECT * FROM RegistroVehiculoNoPermitido WHERE CodigoVehiculo = 19;
+SELECT * FROM RegistroVehiculoNoPermitido WHERE Estado = 1;
+
+-- Consultas para tabla RegistroVehiculoResidente
+SELECT * FROM RegistroVehiculoResidente WHERE CodigoVehiculoResidente = 1;
+SELECT * FROM RegistroVehiculoResidente WHERE CodigoVehiculoResidente = 2;
+SELECT * FROM RegistroVehiculoResidente WHERE CodigoVehiculo = 1;
+SELECT * FROM RegistroVehiculoResidente WHERE NumeroTarjetaTalanquera = 'TAR-001';
+SELECT * FROM RegistroVehiculoResidente WHERE Activo = 1;
+
+-- Consultas para tabla Residencial
+SELECT * FROM Residencial WHERE CodigoResidencial = 1;
+SELECT * FROM Residencial WHERE CodigoResidencial = 2;
+SELECT * FROM Residencial WHERE Nombre LIKE '%San Francisco%';
+SELECT * FROM Residencial WHERE Nombre LIKE '%San Marcos%';
+SELECT * FROM Residencial WHERE ContactoPrincipal LIKE '%@%';
+
+-- Consultas para tabla Sector
+SELECT * FROM Sector WHERE CodigoSector = 1;
+SELECT * FROM Sector WHERE CodigoSector = 2;
+SELECT * FROM Sector WHERE Nombre = 'Andalucía';
+SELECT * FROM Sector WHERE Nombre = 'Bernarda';
+SELECT * FROM Sector WHERE Nombre LIKE '%Diana%';
+
+-- Consultas para tabla Sucursal
+SELECT * FROM Sucursal WHERE CodigoSucursal = 1;
+SELECT * FROM Sucursal WHERE CodigoSucursal = 2;
+SELECT * FROM Sucursal WHERE CodigoEmpresa = 1;
+SELECT * FROM Sucursal WHERE CodigoResidencial = 1;
+SELECT * FROM Sucursal WHERE Descripcion LIKE '%Central%';
+
+-- Consultas para tabla TelefonoSucursal
+SELECT * FROM TelefonoSucursal WHERE CodigoTelefonoSucursal = 1 AND CodigoSucursal = 1;
+SELECT * FROM TelefonoSucursal WHERE CodigoTelefonoSucursal = 1;
+SELECT * FROM TelefonoSucursal WHERE CodigoSucursal = 1;
+SELECT * FROM TelefonoSucursal WHERE CodigoTipoTelefono = 4;
+SELECT * FROM TelefonoSucursal WHERE Telefono = '2234-5000';
+
+-- Consultas para tabla TipoConcepto
+SELECT * FROM TipoConcepto WHERE CodigoTipoConcepto = 1;
+SELECT * FROM TipoConcepto WHERE CodigoTipoConcepto = 2;
+SELECT * FROM TipoConcepto WHERE Descripcion LIKE '%Agua%';
+SELECT * FROM TipoConcepto WHERE Descripcion LIKE '%Seguridad%';
+SELECT * FROM TipoConcepto WHERE MontoFijo > 100;
+
+-- Consultas para tabla TipoDocumentoFiscal
+SELECT * FROM TipoDocumentoFiscal WHERE CodigoTipoDocumento = 1;
+SELECT * FROM TipoDocumentoFiscal WHERE CodigoTipoDocumento = 2;
+SELECT * FROM TipoDocumentoFiscal WHERE Descripcion = 'Recibo';
+SELECT * FROM TipoDocumentoFiscal WHERE Descripcion = 'Factura';
+SELECT * FROM TipoDocumentoFiscal WHERE Descripcion LIKE '%Factura%';
+
+-- Consultas para tabla TipoGarita
+SELECT * FROM TipoGarita WHERE CodigoTipoGarita = 1;
+SELECT * FROM TipoGarita WHERE CodigoTipoGarita = 2;
+SELECT * FROM TipoGarita WHERE Descripcion = 'Principal';
+SELECT * FROM TipoGarita WHERE Descripcion = 'Cluster';
+SELECT * FROM TipoGarita WHERE Descripcion LIKE '%Cluster%';
+
+-- Consultas para tabla TipoIntegrante
+SELECT * FROM TipoIntegrante WHERE CodigoTipoIntegrante = 1;
+SELECT * FROM TipoIntegrante WHERE CodigoTipoIntegrante = 2;
+SELECT * FROM TipoIntegrante WHERE Descripcion = 'Presidente';
+SELECT * FROM TipoIntegrante WHERE Descripcion = 'Vicepresidente';
+SELECT * FROM TipoIntegrante WHERE Descripcion LIKE '%Secretario%';
+
+-- Consultas para tabla TipoLicencia
+SELECT * FROM TipoLicencia WHERE CodigoTipoLicencia = 1;
+SELECT * FROM TipoLicencia WHERE CodigoTipoLicencia = 2;
+SELECT * FROM TipoLicencia WHERE TipoLicencia = 'A';
+SELECT * FROM TipoLicencia WHERE TipoLicencia = 'B';
+SELECT * FROM TipoLicencia WHERE Descripcion LIKE '%Motocicletas%';
+
+-- Consultas para tabla TipoMarcaje
+SELECT * FROM TipoMarcaje WHERE CodigoTipoMarcaje = 1;
+SELECT * FROM TipoMarcaje WHERE CodigoTipoMarcaje = 2;
+SELECT * FROM TipoMarcaje WHERE Descripcion = 'Entrada';
+SELECT * FROM TipoMarcaje WHERE Descripcion = 'Salida';
+SELECT * FROM TipoMarcaje WHERE Descripcion LIKE '%Salida%';
+
+-- Consultas para tabla TipoMulta
+SELECT * FROM TipoMulta WHERE CodigoTipoMulta = 1;
+SELECT * FROM TipoMulta WHERE CodigoTipoMulta = 2;
+SELECT * FROM TipoMulta WHERE Descripcion LIKE '%Mascotas%';
+SELECT * FROM TipoMulta WHERE Descripcion LIKE '%Ruido%';
+SELECT * FROM TipoMulta WHERE ValorMulta > 150;
+
+-- Consultas para tabla TipoPago
+SELECT * FROM TipoPago WHERE CodigoTipoPago = 1;
+SELECT * FROM TipoPago WHERE CodigoTipoPago = 2;
+SELECT * FROM TipoPago WHERE Descripcion = 'Efectivo';
+SELECT * FROM TipoPago WHERE Descripcion = 'Cheque';
+SELECT * FROM TipoPago WHERE Descripcion LIKE '%Tarjeta%';
+
+-- Consultas para tabla TipoRol
+SELECT * FROM TipoRol WHERE CodigoTipoRol = 1;
+SELECT * FROM TipoRol WHERE CodigoTipoRol = 2;
+SELECT * FROM TipoRol WHERE Descripcion = 'Propietario';
+SELECT * FROM TipoRol WHERE Descripcion = 'Inquilino';
+SELECT * FROM TipoRol WHERE Descripcion LIKE '%Inquilino%';
+
+-- Consultas para tabla TipoTelefono
+SELECT * FROM TipoTelefono WHERE CodigoTipoTelefono = 1;
+SELECT * FROM TipoTelefono WHERE CodigoTipoTelefono = 2;
+SELECT * FROM TipoTelefono WHERE Descripcion = 'Movil';
+SELECT * FROM TipoTelefono WHERE Descripcion = 'Casa';
+SELECT * FROM TipoTelefono WHERE Descripcion LIKE '%Trabajo%';
+
+-- Consultas para tabla Vehiculo
+SELECT * FROM Vehiculo WHERE CodigoVehiculo = 1;
+SELECT * FROM Vehiculo WHERE CodigoVehiculo = 2;
+SELECT * FROM Vehiculo WHERE Placa = 'P123ABC';
+SELECT * FROM Vehiculo WHERE Color = 'Negro';
+SELECT * FROM Vehiculo WHERE Anio = 2020;

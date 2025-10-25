@@ -50,7 +50,7 @@ public partial class RegistroMovimientoResidencial
 
     [ForeignKey("CodigoLicencia")]
     [InverseProperty("RegistroMovimientoResidencials")]
-    public virtual Licencium? CodigoLicenciaNavigation { get; set; }
+    public virtual Licencia? CodigoLicenciaNavigation { get; set; }
 
     [ForeignKey("CodigoPersonaTelefono")]
     [InverseProperty("RegistroMovimientoResidencials")]
@@ -65,5 +65,5 @@ public partial class RegistroMovimientoResidencial
     public virtual PersonaRol PersonaRol { get; set; } = null!;
 
     [InverseProperty("CodigoMovimientoResidencialNavigation")]
-    public virtual ICollection<RegistroIngresoOSalidum> RegistroIngresoOSalida { get; set; } = new List<RegistroIngresoOSalidum>();
+    public virtual ICollection<RegistroIngresoOSalida> RegistroIngresoOSalida { get; set; } = new List<RegistroIngresoOSalida>();
 }

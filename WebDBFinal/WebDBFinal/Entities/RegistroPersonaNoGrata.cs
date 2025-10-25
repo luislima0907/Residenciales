@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace WebDBFinal.Entities;
 
-public partial class RegistroPersonaNoGratum
+public partial class RegistroPersonaNoGrata
 {
     [Key]
     public int CodigoRegistroPersonaNoGrata { get; set; }

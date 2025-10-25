@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace WebDBFinal.Entities;
 
 [Index("NumeroLicencia", Name = "UK_Licencia_Numero", IsUnique = true)]
-public partial class Licencium
+public partial class Licencia
 {
     [Key]
     public int CodigoLicencia { get; set; }

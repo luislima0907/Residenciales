@@ -52,11 +52,11 @@ public partial class ResidencialesDbContext : DbContext
 
     public virtual DbSet<GaritaSeguridad> GaritaSeguridads { get; set; }
 
-    public virtual DbSet<IntegranteJuntum> IntegranteJunta { get; set; }
+    public virtual DbSet<IntegranteJunta> IntegranteJunta { get; set; }
 
     public virtual DbSet<JuntaDirectiva> JuntaDirectivas { get; set; }
 
-    public virtual DbSet<Licencium> Licencia { get; set; }
+    public virtual DbSet<Licencia> Licencia { get; set; }
 
     public virtual DbSet<LineaVehiculo> LineaVehiculos { get; set; }
 
@@ -64,7 +64,7 @@ public partial class ResidencialesDbContext : DbContext
 
     public virtual DbSet<MarcajeLaboral> MarcajeLaborals { get; set; }
 
-    public virtual DbSet<Multum> Multa { get; set; }
+    public virtual DbSet<Multa> Multa { get; set; }
 
     public virtual DbSet<Municipio> Municipios { get; set; }
 
@@ -76,11 +76,11 @@ public partial class ResidencialesDbContext : DbContext
 
     public virtual DbSet<PersonaTelefono> PersonaTelefonos { get; set; }
 
-    public virtual DbSet<RegistroIngresoOSalidum> RegistroIngresoOSalida { get; set; }
+    public virtual DbSet<RegistroIngresoOSalida> RegistroIngresoOSalida { get; set; }
 
     public virtual DbSet<RegistroMovimientoResidencial> RegistroMovimientoResidencials { get; set; }
 
-    public virtual DbSet<RegistroPersonaNoGratum> RegistroPersonaNoGrata { get; set; }
+    public virtual DbSet<RegistroPersonaNoGrata> RegistroPersonaNoGrata { get; set; }
 
     public virtual DbSet<RegistroVehiculoNoPermitido> RegistroVehiculoNoPermitidos { get; set; }
 
@@ -330,7 +330,7 @@ public partial class ResidencialesDbContext : DbContext
             entity.HasOne(d => d.Cluster).WithMany(p => p.GaritaSeguridads).HasConstraintName("FK_GaritaSeguridad_Cluster");
         });
 
-        modelBuilder.Entity<IntegranteJuntum>(entity =>
+        modelBuilder.Entity<IntegranteJunta>(entity =>
         {
             entity.Property(e => e.CodigoIntegranteJunta).ValueGeneratedNever();
             entity.Property(e => e.FechaDesignacion).HasDefaultValueSql("(getdate())");
@@ -355,7 +355,7 @@ public partial class ResidencialesDbContext : DbContext
                 .HasConstraintName("FK_JuntaDirectiva_Cluster");
         });
 
-        modelBuilder.Entity<Licencium>(entity =>
+        modelBuilder.Entity<Licencia>(entity =>
         {
             entity.Property(e => e.CodigoLicencia).ValueGeneratedNever();
 
@@ -397,7 +397,7 @@ public partial class ResidencialesDbContext : DbContext
                 .HasConstraintName("FK_MarcajeLaboral_PersonaRol");
         });
 
-        modelBuilder.Entity<Multum>(entity =>
+        modelBuilder.Entity<Multa>(entity =>
         {
             entity.Property(e => e.CodigoMulta).ValueGeneratedNever();
             entity.Property(e => e.Fecha).HasDefaultValueSql("(getdate())");
@@ -464,7 +464,7 @@ public partial class ResidencialesDbContext : DbContext
                 .HasConstraintName("FK_PersonaTelefono_TipoTelefono");
         });
 
-        modelBuilder.Entity<RegistroIngresoOSalidum>(entity =>
+        modelBuilder.Entity<RegistroIngresoOSalida>(entity =>
         {
             entity.Property(e => e.CodigoEntradaOSalida).ValueGeneratedNever();
             entity.Property(e => e.FechaHora).HasDefaultValueSql("(getdate())");
@@ -498,7 +498,7 @@ public partial class ResidencialesDbContext : DbContext
             entity.HasOne(d => d.Casa).WithMany(p => p.RegistroMovimientoResidencials).HasConstraintName("FK_RegistroMovimientoResidencial_Casa");
         });
 
-        modelBuilder.Entity<RegistroPersonaNoGratum>(entity =>
+        modelBuilder.Entity<RegistroPersonaNoGrata>(entity =>
         {
             entity.Property(e => e.CodigoRegistroPersonaNoGrata).ValueGeneratedNever();
             entity.Property(e => e.Estado).HasDefaultValue(true);

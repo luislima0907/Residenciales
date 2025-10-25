@@ -54,7 +54,7 @@ public partial class Persona
     public virtual EstadoCivil CodigoEstadoCivilNavigation { get; set; } = null!;
 
     [InverseProperty("CodigoPersonaNavigation")]
-    public virtual ICollection<Licencium> Licencia { get; set; } = new List<Licencium>();
+    public virtual ICollection<Licencia> Licencia { get; set; } = new List<Licencia>();
 
     [InverseProperty("CodigoPersonaNavigation")]
     public virtual ICollection<PersonaRol> PersonaRols { get; set; } = new List<PersonaRol>();
