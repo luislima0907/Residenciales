@@ -3,6 +3,7 @@
     "",
     "\\WebDBFinal",
     "\\WebDBFinal\\bin",
+    "\\WebDBFinal\\Controllers",
     "\\WebDBFinal\\wwwroot"
   ],
   "SelectedNode": "\\WebDBFinal.sln",

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace WebDBFinal.Entities;
 
-[PrimaryKey("CodigoDetalleCargoMensual", "CodigoCargoMensual", "CodigoTipoConcepto")]
+[PrimaryKey("CodigoDetalleCargoMensual", "CodigoCargoMensual", "CodigoTipoCargo")]
 [Table("DetalleCargoMensual")]
 public partial class DetalleCargoMensual
 {
@@ -17,9 +17,8 @@ public partial class DetalleCargoMensual
     public int CodigoCargoMensual { get; set; }
 
     [Key]
-    public byte CodigoTipoConcepto { get; set; }
+    public byte CodigoTipoCargo { get; set; }
 
-    public int CodigoIntegranteJunta { get; set; }
 
     [Column(TypeName = "decimal(10, 2)")]
     public decimal Unidades { get; set; }
@@ -31,7 +30,7 @@ public partial class DetalleCargoMensual
     [InverseProperty("DetalleCargoMensuals")]
     public virtual CargoMensualCasa CodigoCargoMensualNavigation { get; set; } = null!;
 
-    [ForeignKey("CodigoTipoConcepto")]
+    [ForeignKey("CodigoTipoCargo")]
     [InverseProperty("DetalleCargoMensuals")]
-    public virtual TipoConcepto CodigoTipoConceptoNavigation { get; set; } = null!;
+    public virtual TipoCargo CodigoTipoCargoNavigation { get; set; } = null!;
 }

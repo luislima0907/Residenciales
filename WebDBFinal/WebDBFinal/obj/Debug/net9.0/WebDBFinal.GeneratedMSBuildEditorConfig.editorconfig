@@ -17,65 +17,65 @@ build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = WebDBFinal
 build_property.RootNamespace = WebDBFinal
-build_property.ProjectDir = C:\Users\luisl\OneDrive\Desktop\WebDB\WebDBFinal\WebDBFinal\
+build_property.ProjectDir = C:\Users\erica\OneDrive\Escritorio\Residenciales\WebDBFinal\WebDBFinal\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 9.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\luisl\OneDrive\Desktop\WebDB\WebDBFinal\WebDBFinal
+build_property.MSBuildProjectDirectory = C:\Users\erica\OneDrive\Escritorio\Residenciales\WebDBFinal\WebDBFinal
 build_property._RazorSourceGeneratorDebug = 
 build_property.EffectiveAnalysisLevelStyle = 9.0
 build_property.EnableCodeStyleSeverity = 
 
-[C:/Users/luisl/OneDrive/Desktop/WebDB/WebDBFinal/WebDBFinal/Views/Consultas/Execute.cshtml]
+[C:/Users/erica/OneDrive/Escritorio/Residenciales/WebDBFinal/WebDBFinal/Views/Consultas/Execute.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29uc3VsdGFzXEV4ZWN1dGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/luisl/OneDrive/Desktop/WebDB/WebDBFinal/WebDBFinal/Views/Consultas/Index.cshtml]
+[C:/Users/erica/OneDrive/Escritorio/Residenciales/WebDBFinal/WebDBFinal/Views/Consultas/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29uc3VsdGFzXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/luisl/OneDrive/Desktop/WebDB/WebDBFinal/WebDBFinal/Views/Consultas/Results.cshtml]
+[C:/Users/erica/OneDrive/Escritorio/Residenciales/WebDBFinal/WebDBFinal/Views/Consultas/Results.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29uc3VsdGFzXFJlc3VsdHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/luisl/OneDrive/Desktop/WebDB/WebDBFinal/WebDBFinal/Views/Home/Index.cshtml]
+[C:/Users/erica/OneDrive/Escritorio/Residenciales/WebDBFinal/WebDBFinal/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/luisl/OneDrive/Desktop/WebDB/WebDBFinal/WebDBFinal/Views/Home/Privacy.cshtml]
+[C:/Users/erica/OneDrive/Escritorio/Residenciales/WebDBFinal/WebDBFinal/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/luisl/OneDrive/Desktop/WebDB/WebDBFinal/WebDBFinal/Views/Shared/Error.cshtml]
+[C:/Users/erica/OneDrive/Escritorio/Residenciales/WebDBFinal/WebDBFinal/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/luisl/OneDrive/Desktop/WebDB/WebDBFinal/WebDBFinal/Views/Shared/GenericCreate.cshtml]
+[C:/Users/erica/OneDrive/Escritorio/Residenciales/WebDBFinal/WebDBFinal/Views/Shared/GenericCreate.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEdlbmVyaWNDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/luisl/OneDrive/Desktop/WebDB/WebDBFinal/WebDBFinal/Views/Shared/GenericEdit.cshtml]
+[C:/Users/erica/OneDrive/Escritorio/Residenciales/WebDBFinal/WebDBFinal/Views/Shared/GenericEdit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEdlbmVyaWNFZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/luisl/OneDrive/Desktop/WebDB/WebDBFinal/WebDBFinal/Views/Shared/GenericIndex.cshtml]
+[C:/Users/erica/OneDrive/Escritorio/Residenciales/WebDBFinal/WebDBFinal/Views/Shared/GenericIndex.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEdlbmVyaWNJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/luisl/OneDrive/Desktop/WebDB/WebDBFinal/WebDBFinal/Views/Shared/_ValidationScriptsPartial.cshtml]
+[C:/Users/erica/OneDrive/Escritorio/Residenciales/WebDBFinal/WebDBFinal/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/luisl/OneDrive/Desktop/WebDB/WebDBFinal/WebDBFinal/Views/_ViewImports.cshtml]
+[C:/Users/erica/OneDrive/Escritorio/Residenciales/WebDBFinal/WebDBFinal/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/luisl/OneDrive/Desktop/WebDB/WebDBFinal/WebDBFinal/Views/_ViewStart.cshtml]
+[C:/Users/erica/OneDrive/Escritorio/Residenciales/WebDBFinal/WebDBFinal/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/luisl/OneDrive/Desktop/WebDB/WebDBFinal/WebDBFinal/Views/Shared/_Layout.cshtml]
+[C:/Users/erica/OneDrive/Escritorio/Residenciales/WebDBFinal/WebDBFinal/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-5x3izh3qzp

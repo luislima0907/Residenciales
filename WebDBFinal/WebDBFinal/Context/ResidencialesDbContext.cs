@@ -88,7 +88,7 @@ public partial class ResidencialesDbContext : DbContext
 
     public virtual DbSet<TelefonoSucursal> TelefonoSucursals { get; set; }
 
-    public virtual DbSet<TipoConcepto> TipoConceptos { get; set; }
+    public virtual DbSet<TipoCargo> TipoCargo { get; set; }
 
     public virtual DbSet<TipoDocumentoFiscal> TipoDocumentoFiscals { get; set; }
 
@@ -186,9 +186,9 @@ public partial class ResidencialesDbContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_DetalleCargoMensual_CargoMensual");
 
-            entity.HasOne(d => d.CodigoTipoConceptoNavigation).WithMany(p => p.DetalleCargoMensuals)
+            entity.HasOne(d => d.CodigoTipoCargoNavigation).WithMany(p => p.DetalleCargoMensuals)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_DetalleCargoMensual_TipoConcepto");
+                .HasConstraintName("FK_DetalleCargoMensual_TipoCargo");
         });
 
         modelBuilder.Entity<DetalleCenso>(entity =>

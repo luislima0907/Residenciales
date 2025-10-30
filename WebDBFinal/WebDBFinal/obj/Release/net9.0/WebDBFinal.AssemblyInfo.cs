@@ -11,10 +11,11 @@
 using System;
 using System.Reflection;
 
+[assembly: Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute("72952a7d-55e8-4926-b8d1-ae0e0e2eb56c")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("WebDBFinal")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0f0a6449f7a1aa89b1ffd6d940e326cd9272f3ae")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d7c0c62ba82b9160e7a5d073391dc1d240ecbf6b")]
 [assembly: System.Reflection.AssemblyProductAttribute("WebDBFinal")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WebDBFinal")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

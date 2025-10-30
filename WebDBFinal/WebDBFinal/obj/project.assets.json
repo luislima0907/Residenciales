@@ -8985,23 +8985,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\luisl\\.nuget\\packages\\": {},
+    "C:\\Users\\erica\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\luisl\\OneDrive\\Desktop\\WebDB\\WebDBFinal\\WebDBFinal\\WebDBFinal.csproj",
+      "projectUniqueName": "C:\\Users\\erica\\OneDrive\\Escritorio\\Residenciales\\WebDBFinal\\WebDBFinal\\WebDBFinal.csproj",
       "projectName": "WebDBFinal",
-      "projectPath": "C:\\Users\\luisl\\OneDrive\\Desktop\\WebDB\\WebDBFinal\\WebDBFinal\\WebDBFinal.csproj",
-      "packagesPath": "C:\\Users\\luisl\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\luisl\\OneDrive\\Desktop\\WebDB\\WebDBFinal\\WebDBFinal\\obj\\",
+      "projectPath": "C:\\Users\\erica\\OneDrive\\Escritorio\\Residenciales\\WebDBFinal\\WebDBFinal\\WebDBFinal.csproj",
+      "packagesPath": "C:\\Users\\erica\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\erica\\OneDrive\\Escritorio\\Residenciales\\WebDBFinal\\WebDBFinal\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\luisl\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\erica\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
