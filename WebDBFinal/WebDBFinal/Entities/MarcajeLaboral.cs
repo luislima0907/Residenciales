@@ -35,10 +35,7 @@ public partial class MarcajeLaboral
     [ForeignKey("CodigoTipoMarcaje")]
     [InverseProperty("MarcajeLaborals")]
     public virtual TipoMarcaje CodigoTipoMarcajeNavigation { get; set; } = null!;
-
-    [InverseProperty("CodigoMarcajeNavigation")]
-    public virtual ICollection<ControlGaritaSeguridad> ControlGaritaSeguridads { get; set; } = new List<ControlGaritaSeguridad>();
-
+    
     [InverseProperty("CodigoMarcajeNavigation")]
     public virtual ICollection<DetalleFacturacionSeguridad> DetalleFacturacionSeguridads { get; set; } = new List<DetalleFacturacionSeguridad>();
 

@@ -34,9 +34,7 @@ public partial class DocumentoFiscal
     [Unicode(false)]
     public string NIT { get; set; } = null!;
 
-    [InverseProperty("DocumentoFiscal")]
-    public virtual ICollection<AplicacionDocumento> AplicacionDocumentos { get; set; } = new List<AplicacionDocumento>();
-
+    
     [ForeignKey("CodigoTipoDocumento")]
     [InverseProperty("DocumentoFiscals")]
     public virtual TipoDocumentoFiscal CodigoTipoDocumentoNavigation { get; set; } = null!;

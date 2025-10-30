@@ -1,10 +1,3 @@
--- Consultas para tabla AplicacionDocumento
-SELECT * FROM AplicacionDocumento WHERE CodigoAplicacionDocumento = 1;
-SELECT * FROM AplicacionDocumento WHERE CodigoTipoDocumento = 1;
-SELECT * FROM AplicacionDocumento WHERE Serie = 'A';
-SELECT * FROM AplicacionDocumento WHERE Numero = 1001;
-SELECT * FROM AplicacionDocumento WHERE MontoTotal > 100;
-
 -- Consultas para tabla CargoMensualCasa
 SELECT * FROM CargoMensualCasa WHERE CodigoCargoMensual = 1;
 SELECT * FROM CargoMensualCasa WHERE NumeroCasa = 15;
@@ -33,13 +26,6 @@ SELECT * FROM Cluster WHERE CodigoSucursal = 1;
 SELECT * FROM Cluster WHERE CodigoSector = 1;
 SELECT * FROM Cluster WHERE CodigoSucursal = 1 AND CodigoSector = 1;
 
--- Consultas para tabla ControlGaritaSeguridad
-SELECT * FROM ControlGaritaSeguridad WHERE CodigoControl = 1;
-SELECT * FROM ControlGaritaSeguridad WHERE CodigoPersonaRol = 20;
-SELECT * FROM ControlGaritaSeguridad WHERE CodigoPersona = 4;
-SELECT * FROM ControlGaritaSeguridad WHERE CodigoMarcaje = 1;
-SELECT * FROM ControlGaritaSeguridad WHERE Observaciones LIKE '%matutino%';
-
 -- Consultas para tabla Departamento
 SELECT * FROM Departamento WHERE CodigoDepartamento = 1;
 SELECT * FROM Departamento WHERE CodigoDepartamento = 2;
@@ -61,13 +47,6 @@ SELECT * FROM DetalleCenso WHERE CodigoCenso = 1;
 SELECT * FROM DetalleCenso WHERE NumeroCasa = 15;
 SELECT * FROM DetalleCenso WHERE CodigoPersonaRol = 1;
 
--- Consultas para tabla DetalleEstadoCuenta
-SELECT * FROM DetalleEstadoCuenta WHERE CodigoDetalleEstadoCuenta = 1 AND NumeroEstadoCuenta = 1;
-SELECT * FROM DetalleEstadoCuenta WHERE CodigoDetalleEstadoCuenta = 1;
-SELECT * FROM DetalleEstadoCuenta WHERE NumeroEstadoCuenta = 1;
-SELECT * FROM DetalleEstadoCuenta WHERE AnioCargo = 2024;
-SELECT * FROM DetalleEstadoCuenta WHERE MesCargo = 1;
-
 -- Consultas para tabla DetalleFacturacionSeguridad
 SELECT * FROM DetalleFacturacionSeguridad WHERE CodigoDetalleFacturacion = 1 AND CodigoPeriodoFacturacion = 1;
 SELECT * FROM DetalleFacturacionSeguridad WHERE CodigoDetalleFacturacion = 1;
@@ -76,7 +55,6 @@ SELECT * FROM DetalleFacturacionSeguridad WHERE TotalHorasTrabajadas > 8;
 SELECT * FROM DetalleFacturacionSeguridad WHERE MontoAPagar > 100;
 
 -- Consultas para tabla DetallePagoDocumento
-SELECT * FROM DetallePagoDocumento WHERE CodigoDetallePagoDocumento = 1 AND CodigoAplicacionDocumento = 1;
 SELECT * FROM DetallePagoDocumento WHERE CodigoDetallePagoDocumento = 1;
 SELECT * FROM DetallePagoDocumento WHERE CodigoAplicacionDocumento = 1;
 SELECT * FROM DetallePagoDocumento WHERE CodigoTipoPago = 3;
@@ -110,12 +88,6 @@ SELECT * FROM EstadoCivil WHERE Descripcion = 'Casado(a)';
 SELECT * FROM EstadoCivil WHERE Descripcion = 'Soltero(a)';
 SELECT * FROM EstadoCivil WHERE Descripcion LIKE '%Soltero%';
 
--- Consultas para tabla EstadoCuenta
-SELECT * FROM EstadoCuenta WHERE NumeroEstadoCuenta = 1;
-SELECT * FROM EstadoCuenta WHERE NumeroEstadoCuenta = 2;
-SELECT * FROM EstadoCuenta WHERE CodigoPersonaRol = 1;
-SELECT * FROM EstadoCuenta WHERE TotalVencido > 0;
-SELECT * FROM EstadoCuenta WHERE MesesVencidos > 0;
 
 -- Consultas para tabla GaritaSeguridad
 SELECT * FROM GaritaSeguridad WHERE CodigoGaritaSeguridad = 1;
@@ -208,13 +180,6 @@ SELECT * FROM PersonaTelefono WHERE CodigoPersona = 1;
 SELECT * FROM PersonaTelefono WHERE CodigoTipoTelefono = 1;
 SELECT * FROM PersonaTelefono WHERE Numero = '5566-7788';
 
--- Consultas para tabla RegistroIngresoOSalida
-SELECT * FROM RegistroIngresoOSalida WHERE CodigoEntradaOSalida = 3;
-SELECT * FROM RegistroIngresoOSalida WHERE CodigoEntradaOSalida = 4;
-SELECT * FROM RegistroIngresoOSalida WHERE CodigoMovimientoResidencial = 2;
-SELECT * FROM RegistroIngresoOSalida WHERE TipoMovimiento = 'I';
-SELECT * FROM RegistroIngresoOSalida WHERE FechaHora > '2024-01-15';
-
 -- Consultas para tabla RegistroMovimientoResidencial
 SELECT * FROM RegistroMovimientoResidencial WHERE CodigoMovimientoResidencial = 1;
 SELECT * FROM RegistroMovimientoResidencial WHERE CodigoMovimientoResidencial = 2;
@@ -222,19 +187,6 @@ SELECT * FROM RegistroMovimientoResidencial WHERE CodigoGaritaSeguridad = 1;
 SELECT * FROM RegistroMovimientoResidencial WHERE CodigoPersonaRol = 25;
 SELECT * FROM RegistroMovimientoResidencial WHERE MotivoVisita LIKE '%familiar%';
 
--- Consultas para tabla RegistroPersonaNoGrata
-SELECT * FROM RegistroPersonaNoGrata WHERE CodigoRegistroPersonaNoGrata = 1;
-SELECT * FROM RegistroPersonaNoGrata WHERE CodigoRegistroPersonaNoGrata = 2;
-SELECT * FROM RegistroPersonaNoGrata WHERE CodigoPersonaRol = 24;
-SELECT * FROM RegistroPersonaNoGrata WHERE CodigoPersona = 5;
-SELECT * FROM RegistroPersonaNoGrata WHERE Estado = 1;
-
--- Consultas para tabla RegistroVehiculoNoPermitido
-SELECT * FROM RegistroVehiculoNoPermitido WHERE CodigoVehiculoNoPermitido = 1;
-SELECT * FROM RegistroVehiculoNoPermitido WHERE CodigoVehiculoNoPermitido = 2;
-SELECT * FROM RegistroVehiculoNoPermitido WHERE CodigoVehiculo = 18;
-SELECT * FROM RegistroVehiculoNoPermitido WHERE CodigoVehiculo = 19;
-SELECT * FROM RegistroVehiculoNoPermitido WHERE Estado = 1;
 
 -- Consultas para tabla RegistroVehiculoResidente
 SELECT * FROM RegistroVehiculoResidente WHERE CodigoVehiculoResidente = 1;
@@ -271,12 +223,12 @@ SELECT * FROM TelefonoSucursal WHERE CodigoSucursal = 1;
 SELECT * FROM TelefonoSucursal WHERE CodigoTipoTelefono = 4;
 SELECT * FROM TelefonoSucursal WHERE Telefono = '2234-5000';
 
--- Consultas para tabla TipoConcepto
-SELECT * FROM TipoConcepto WHERE CodigoTipoConcepto = 1;
-SELECT * FROM TipoConcepto WHERE CodigoTipoConcepto = 2;
-SELECT * FROM TipoConcepto WHERE Descripcion LIKE '%Agua%';
-SELECT * FROM TipoConcepto WHERE Descripcion LIKE '%Seguridad%';
-SELECT * FROM TipoConcepto WHERE MontoFijo > 100;
+-- Consultas para tabla TipoCargo
+SELECT * FROM TipoCargo WHERE CodigoTipoCargo = 1;
+SELECT * FROM TipoCargo WHERE CodigoTipoCargo = 2;
+SELECT * FROM TipoCargo WHERE Descripcion LIKE '%Agua%';
+SELECT * FROM TipoCargo WHERE Descripcion LIKE '%Seguridad%';
+SELECT * FROM TipoCargo WHERE MontoFijo > 100;
 
 -- Consultas para tabla TipoDocumentoFiscal
 SELECT * FROM TipoDocumentoFiscal WHERE CodigoTipoDocumento = 1;
@@ -312,13 +264,6 @@ SELECT * FROM TipoMarcaje WHERE CodigoTipoMarcaje = 2;
 SELECT * FROM TipoMarcaje WHERE Descripcion = 'Entrada';
 SELECT * FROM TipoMarcaje WHERE Descripcion = 'Salida';
 SELECT * FROM TipoMarcaje WHERE Descripcion LIKE '%Salida%';
-
--- Consultas para tabla TipoMulta
-SELECT * FROM TipoMulta WHERE CodigoTipoMulta = 1;
-SELECT * FROM TipoMulta WHERE CodigoTipoMulta = 2;
-SELECT * FROM TipoMulta WHERE Descripcion LIKE '%Mascotas%';
-SELECT * FROM TipoMulta WHERE Descripcion LIKE '%Ruido%';
-SELECT * FROM TipoMulta WHERE ValorMulta > 150;
 
 -- Consultas para tabla TipoPago
 SELECT * FROM TipoPago WHERE CodigoTipoPago = 1;

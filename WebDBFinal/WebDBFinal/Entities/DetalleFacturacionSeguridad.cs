@@ -28,11 +28,7 @@ public partial class DetalleFacturacionSeguridad
 
     [Column(TypeName = "money")]
     public decimal MontoAPagar { get; set; }
-
-    [ForeignKey("CodigoControl")]
-    [InverseProperty("DetalleFacturacionSeguridads")]
-    public virtual ControlGaritaSeguridad? CodigoControlNavigation { get; set; }
-
+    
     [ForeignKey("CodigoMarcaje")]
     [InverseProperty("DetalleFacturacionSeguridads")]
     public virtual MarcajeLaboral? CodigoMarcajeNavigation { get; set; }

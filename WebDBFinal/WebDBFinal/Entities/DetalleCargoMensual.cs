@@ -26,10 +26,7 @@ public partial class DetalleCargoMensual
 
     [Column(TypeName = "money")]
     public decimal ValorTotal { get; set; }
-
-    [InverseProperty("DetalleCargoMensual")]
-    public virtual ICollection<AplicacionDocumento> AplicacionDocumentos { get; set; } = new List<AplicacionDocumento>();
-
+    
     [ForeignKey("CodigoCargoMensual")]
     [InverseProperty("DetalleCargoMensuals")]
     public virtual CargoMensualCasa CodigoCargoMensualNavigation { get; set; } = null!;

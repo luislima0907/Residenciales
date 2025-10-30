@@ -63,7 +63,4 @@ public partial class RegistroMovimientoResidencial
     [ForeignKey("CodigoPersonaRol, CodigoPersona, CodigoTipoRol")]
     [InverseProperty("RegistroMovimientoResidencials")]
     public virtual PersonaRol PersonaRol { get; set; } = null!;
-
-    [InverseProperty("CodigoMovimientoResidencialNavigation")]
-    public virtual ICollection<RegistroIngresoOSalida> RegistroIngresoOSalida { get; set; } = new List<RegistroIngresoOSalida>();
 }

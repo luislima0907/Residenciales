@@ -23,15 +23,8 @@ public partial class DetallePagoDocumento
 
     [Column(TypeName = "money")]
     public decimal MontoPagado { get; set; }
-
-    [ForeignKey("CodigoAplicacionDocumento")]
-    [InverseProperty("DetallePagoDocumentos")]
-    public virtual AplicacionDocumento CodigoAplicacionDocumentoNavigation { get; set; } = null!;
-
+    
     [ForeignKey("CodigoTipoPago")]
     [InverseProperty("DetallePagoDocumentos")]
     public virtual TipoPago CodigoTipoPagoNavigation { get; set; } = null!;
-
-    [InverseProperty("DetallePagoDocumentoNavigation")]
-    public virtual ICollection<DetalleEstadoCuentum> DetalleEstadoCuenta { get; set; } = new List<DetalleEstadoCuentum>();
 }

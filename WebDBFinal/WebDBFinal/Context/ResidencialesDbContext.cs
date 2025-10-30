@@ -16,7 +16,6 @@ public partial class ResidencialesDbContext : DbContext
     {
     }
 
-    public virtual DbSet<AplicacionDocumento> AplicacionDocumentos { get; set; }
 
     public virtual DbSet<CargoMensualCasa> CargoMensualCasas { get; set; }
 
@@ -26,7 +25,6 @@ public partial class ResidencialesDbContext : DbContext
 
     public virtual DbSet<Cluster> Clusters { get; set; }
 
-    public virtual DbSet<ControlGaritaSeguridad> ControlGaritaSeguridads { get; set; }
 
     public virtual DbSet<Departamento> Departamentos { get; set; }
 
@@ -34,7 +32,6 @@ public partial class ResidencialesDbContext : DbContext
 
     public virtual DbSet<DetalleCenso> DetalleCensos { get; set; }
 
-    public virtual DbSet<DetalleEstadoCuentum> DetalleEstadoCuenta { get; set; }
 
     public virtual DbSet<DetalleFacturacionSeguridad> DetalleFacturacionSeguridads { get; set; }
 
@@ -48,7 +45,6 @@ public partial class ResidencialesDbContext : DbContext
 
     public virtual DbSet<EstadoCivil> EstadoCivils { get; set; }
 
-    public virtual DbSet<EstadoCuentum> EstadoCuenta { get; set; }
 
     public virtual DbSet<GaritaSeguridad> GaritaSeguridads { get; set; }
 
@@ -64,7 +60,6 @@ public partial class ResidencialesDbContext : DbContext
 
     public virtual DbSet<MarcajeLaboral> MarcajeLaborals { get; set; }
 
-    public virtual DbSet<Multa> Multa { get; set; }
 
     public virtual DbSet<Municipio> Municipios { get; set; }
 
@@ -76,7 +71,6 @@ public partial class ResidencialesDbContext : DbContext
 
     public virtual DbSet<PersonaTelefono> PersonaTelefonos { get; set; }
 
-    public virtual DbSet<RegistroIngresoOSalida> RegistroIngresoOSalida { get; set; }
 
     public virtual DbSet<RegistroMovimientoResidencial> RegistroMovimientoResidencials { get; set; }
 
@@ -106,7 +100,6 @@ public partial class ResidencialesDbContext : DbContext
 
     public virtual DbSet<TipoMarcaje> TipoMarcajes { get; set; }
 
-    public virtual DbSet<TipoMultum> TipoMulta { get; set; }
 
     public virtual DbSet<TipoPago> TipoPagos { get; set; }
 
@@ -128,20 +121,7 @@ public partial class ResidencialesDbContext : DbContext
       
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<AplicacionDocumento>(entity =>
-        {
-            entity.Property(e => e.CodigoAplicacionDocumento).ValueGeneratedNever();
-            entity.Property(e => e.IVA).HasDefaultValue(0m);
-
-            entity.HasOne(d => d.CodigoMultaNavigation).WithMany(p => p.AplicacionDocumentos).HasConstraintName("FK_AplicacionDocumento_Multa");
-
-            entity.HasOne(d => d.DetalleCargoMensual).WithMany(p => p.AplicacionDocumentos).HasConstraintName("FK_AplicacionDocumento_DetalleCargo");
-
-            entity.HasOne(d => d.DocumentoFiscal).WithMany(p => p.AplicacionDocumentos)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_AplicacionDocumento_DocumentoFiscal");
-        });
-
+        
         modelBuilder.Entity<CargoMensualCasa>(entity =>
         {
             entity.Property(e => e.CodigoCargoMensual).ValueGeneratedNever();
@@ -194,19 +174,7 @@ public partial class ResidencialesDbContext : DbContext
                 .HasConstraintName("FK_Cluster_Sucursal");
         });
 
-        modelBuilder.Entity<ControlGaritaSeguridad>(entity =>
-        {
-            entity.Property(e => e.CodigoControl).ValueGeneratedNever();
-
-            entity.HasOne(d => d.CodigoMarcajeNavigation).WithMany(p => p.ControlGaritaSeguridads)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_ControlGaritaSeguridad_Marcaje");
-
-            entity.HasOne(d => d.PersonaRol).WithMany(p => p.ControlGaritaSeguridads)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_ControlGaritaSeguridad_PersonaRol");
-        });
-
+        
         modelBuilder.Entity<Departamento>(entity =>
         {
             entity.Property(e => e.CodigoDepartamento).ValueGeneratedNever();
@@ -235,25 +203,11 @@ public partial class ResidencialesDbContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_DetalleCenso_Casa");
         });
-
-        modelBuilder.Entity<DetalleEstadoCuentum>(entity =>
-        {
-            entity.HasOne(d => d.DetallePagoDocumentoNavigation).WithMany(p => p.DetalleEstadoCuenta)
-                .HasForeignKey(d => new { d.CodigoDetallePagoDocumento, d.CodigoAplicacionDocumento })
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_DetalleEstadoCuenta_DetallePago");
-
-            entity.HasOne(d => d.NumeroEstadoCuentaNavigation).WithMany(p => p.DetalleEstadoCuenta)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_DetalleEstadoCuenta_EstadoCuenta");
-        });
-
+        
         modelBuilder.Entity<DetalleFacturacionSeguridad>(entity =>
         {
             entity.HasKey(e => new { e.CodigoDetalleFacturacion, e.CodigoPeriodoFacturacion }).HasName("PK_DetalleFacturacion");
-
-            entity.HasOne(d => d.CodigoControlNavigation).WithMany(p => p.DetalleFacturacionSeguridads).HasConstraintName("FK_DetalleFacturacionSeguridad_Control");
-
+            
             entity.HasOne(d => d.CodigoMarcajeNavigation).WithMany(p => p.DetalleFacturacionSeguridads).HasConstraintName("FK_DetalleFacturacionSeguridad_Marcaje");
 
             entity.HasOne(d => d.CodigoPeriodoFacturacionNavigation).WithMany(p => p.DetalleFacturacionSeguridads)
@@ -264,11 +218,7 @@ public partial class ResidencialesDbContext : DbContext
         modelBuilder.Entity<DetallePagoDocumento>(entity =>
         {
             entity.Property(e => e.FechaPago).HasDefaultValueSql("(getdate())");
-
-            entity.HasOne(d => d.CodigoAplicacionDocumentoNavigation).WithMany(p => p.DetallePagoDocumentos)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_DetallePagoDocumento_Aplicacion");
-
+            
             entity.HasOne(d => d.CodigoTipoPagoNavigation).WithMany(p => p.DetallePagoDocumentos)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_DetallePagoDocumento_TipoPago");
@@ -302,23 +252,7 @@ public partial class ResidencialesDbContext : DbContext
         {
             entity.Property(e => e.CodigoEmpresa).ValueGeneratedNever();
         });
-
-        modelBuilder.Entity<EstadoCuentum>(entity =>
-        {
-            entity.HasKey(e => e.NumeroEstadoCuenta).HasName("PK_EstadoCuentaGenerado");
-
-            entity.Property(e => e.NumeroEstadoCuenta).ValueGeneratedNever();
-            entity.Property(e => e.FechaGeneracion).HasDefaultValueSql("(getdate())");
-
-            entity.HasOne(d => d.PersonaRol).WithMany(p => p.EstadoCuenta)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_EstadoCuentaGenerado_PersonaRol");
-
-            entity.HasOne(d => d.Casa).WithMany(p => p.EstadoCuenta)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_EstadoCuentaGenerado_Casa");
-        });
-
+        
         modelBuilder.Entity<GaritaSeguridad>(entity =>
         {
             entity.Property(e => e.CodigoGaritaSeguridad).ValueGeneratedNever();
@@ -397,21 +331,7 @@ public partial class ResidencialesDbContext : DbContext
                 .HasConstraintName("FK_MarcajeLaboral_PersonaRol");
         });
 
-        modelBuilder.Entity<Multa>(entity =>
-        {
-            entity.Property(e => e.CodigoMulta).ValueGeneratedNever();
-            entity.Property(e => e.Fecha).HasDefaultValueSql("(getdate())");
-            entity.Property(e => e.Pagada).HasDefaultValue(false);
-
-            entity.HasOne(d => d.CodigoTipoMultaNavigation).WithMany(p => p.Multa)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Multa_TipoMulta");
-
-            entity.HasOne(d => d.Casa).WithMany(p => p.Multa)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Multa_Casa");
-        });
-
+        
         modelBuilder.Entity<Municipio>(entity =>
         {
             entity.HasOne(d => d.CodigoDepartamentoNavigation).WithMany(p => p.Municipios)
@@ -464,17 +384,7 @@ public partial class ResidencialesDbContext : DbContext
                 .HasConstraintName("FK_PersonaTelefono_TipoTelefono");
         });
 
-        modelBuilder.Entity<RegistroIngresoOSalida>(entity =>
-        {
-            entity.Property(e => e.CodigoEntradaOSalida).ValueGeneratedNever();
-            entity.Property(e => e.FechaHora).HasDefaultValueSql("(getdate())");
-            entity.Property(e => e.TipoMovimiento).IsFixedLength();
-
-            entity.HasOne(d => d.CodigoMovimientoResidencialNavigation).WithMany(p => p.RegistroIngresoOSalida)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_RegistroIngresoOSalida_Movimiento");
-        });
-
+        
         modelBuilder.Entity<RegistroMovimientoResidencial>(entity =>
         {
             entity.Property(e => e.CodigoMovimientoResidencial).ValueGeneratedNever();

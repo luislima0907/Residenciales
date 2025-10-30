@@ -38,19 +38,13 @@ public partial class PersonaRol
     [ForeignKey("CodigoTipoRol")]
     [InverseProperty("PersonaRols")]
     public virtual TipoRol CodigoTipoRolNavigation { get; set; } = null!;
-
-    [InverseProperty("PersonaRol")]
-    public virtual ICollection<ControlGaritaSeguridad> ControlGaritaSeguridads { get; set; } = new List<ControlGaritaSeguridad>();
-
+    
     [InverseProperty("PersonaRol")]
     public virtual ICollection<DetalleCenso> DetalleCensos { get; set; } = new List<DetalleCenso>();
 
     [InverseProperty("PersonaRol")]
     public virtual ICollection<DocumentoFiscal> DocumentoFiscals { get; set; } = new List<DocumentoFiscal>();
-
-    [InverseProperty("PersonaRol")]
-    public virtual ICollection<EstadoCuentum> EstadoCuenta { get; set; } = new List<EstadoCuentum>();
-
+    
     [InverseProperty("PersonaRol")]
     public virtual ICollection<IntegranteJunta> IntegranteJunta { get; set; } = new List<IntegranteJunta>();
 
